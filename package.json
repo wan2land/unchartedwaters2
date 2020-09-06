@@ -1,0 +1,31 @@
+{
+  "name": "unchartedwater2",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "js-dos": "^6.22.59"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^6.1.0",
+    "css-loader": "^4.2.2",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.4.1",
+    "mini-css-extract-plugin": "^0.11.0",
+    "postcss-loader": "^3.0.0",
+    "typescript": "^4.0.2",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
