@@ -15,6 +15,6 @@ export function createDos(canvas: HTMLCanvasElement): Promise<DosRuntime> {
   })
 }
 
-export function applyQwerty(elem: HTMLDivElement, consumer: DosKeyEventConsumer) {
-  DosController.Qwerty(elem, consumer)
+export function applyMove(elem: HTMLDivElement, consumer: DosKeyEventConsumer) {
+  DosController.Move(elem, consumer)
 }
