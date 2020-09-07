@@ -1,5 +1,7 @@
 # Uncharted Water 2 for Web
 
+![shot1](./screenshots/0.png)
+
 대항해시대2 한글판 게임을 웹에서 할 수 있도록 작업하였습니다.
 
 1. 게임 내에 저장파일은 IndexedDB에 저장됩니다. 웹버전이지만 브라우저를 바꾸지 않는한 지속적으로 게임을 플레이할 수 있습니다.
