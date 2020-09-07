@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js --mode development",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "deploy": "push-dir --dir=dist --branch=gh-pages"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -22,6 +23,7 @@
     "html-webpack-plugin": "^4.4.1",
     "mini-css-extract-plugin": "^0.11.0",
     "postcss-loader": "^3.0.0",
+    "push-dir": "^0.4.1",
     "typescript": "^4.0.2",
     "url-loader": "^4.1.0",
     "webpack": "^4.44.1",
