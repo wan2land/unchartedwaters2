@@ -36,10 +36,33 @@ function createKeyboardEvent(type: string, keyCode: number) {
   return event
 }
 
+async function fadeOut(elem: HTMLElement) {
+  elem.classList.add('fade-out-start')
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  elem.classList.add('fade-out-end')
+  await new Promise((resolve) => setTimeout(resolve, 500))
+  elem.classList.remove('fade-out-start')
+  elem.classList.remove('fade-out-end')
+  elem.classList.add('hidden')
+}
+
 ;(async () => {
+  const canvas = document.getElementById('canvas') as HTMLCanvasElement
+  const $messageSaveFile = document.getElementById('message-savefile')
+  const $buttonHelp = document.getElementById('button-help')
+  const $modalHelp = document.getElementById('modal-help')
+  const $modalHelpClose = document.getElementById('modal-help-close')
+
+  $buttonHelp.addEventListener('click', () => {
+    $modalHelp.classList.remove('hidden')
+  })
+  $modalHelpClose.addEventListener('click', () => {
+    fadeOut($modalHelp)
+  })
+
+
   blockAddEventListener(document, ['keydown', 'keyup', 'keypress'])
 
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement
 
   const db = await createIdbFileSystem('water2', 1)
   const { fs, main } = await createDos(canvas)
@@ -73,8 +96,11 @@ function createKeyboardEvent(type: string, keyCode: number) {
     }
   })
 
-  detectFileChange(fs, SAVE_FILE_PATH, () => {
-    console.log('file saved!')
+  detectFileChange(fs, SAVE_FILE_PATH, async () => {
     db.save(SAVE_FILE_PATH, (fs as any).fs.readFile(SAVE_FILE_PATH))
+
+    $messageSaveFile.classList.remove('hidden')
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    fadeOut($messageSaveFile)
   })
 })()
