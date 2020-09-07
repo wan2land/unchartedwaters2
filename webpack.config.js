@@ -43,6 +43,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
+        { from: __dirname + '/CNAME' },
         { from: __dirname + '/node_modules/js-dos/dist/wdosbox.js', to: 'static' },
         { from: __dirname + '/node_modules/js-dos/dist/wdosbox.wasm.js', to: 'static' },
         { from: 'game/water2.zip', to: 'static' },
