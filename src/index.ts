@@ -83,7 +83,6 @@ async function fadeOut(elem: HTMLElement) {
   restoreAddEventListener(document)
 
   document.addEventListener('keydown', (e) => {
-    console.log('keydown', e.key, e.code, e.keyCode, e.which)
     if (KEY_MAPS[e.code]) {
       const event = createKeyboardEvent('keydown', KEY_MAPS[e.code])
       keydownHandlers.forEach(handler => handler(event))

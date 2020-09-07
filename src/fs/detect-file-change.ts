@@ -5,12 +5,16 @@ export function detectFileChange(fs: DosFS, path: string, handler: () => any) {
   let lastModified = null as number | null
   let debouncedHandler = debounce(handler, 350)
   setInterval(() => {
-    const modified = (fs as any).fs.stat(path).mtime.getTime() as number
-    if (lastModified !== modified) {
-      if (lastModified) {
-        debouncedHandler()
+    try {
+      const modified = (fs as any).fs.stat(path).mtime.getTime() as number
+      if (lastModified !== modified) {
+        if (lastModified) {
+          debouncedHandler()
+        }
+        lastModified = modified
       }
-      lastModified = modified
+    } catch (e) {
+      lastModified = -1
     }
   }, 300)
 }
