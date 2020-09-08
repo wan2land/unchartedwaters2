@@ -1,10 +1,10 @@
 <template>
-  <div class="view" ref="view">
+  <div class="view" @touchstart.stop>
     <div class="game">
       <canvas ref="canvas"></canvas>
       <div class="event-blocker"></div>
     </div>
-    <div class="controller">
+    <div class="controller is-desktop">
       <div class="keyboard">
         <div class="line">
           <div class="key" @click="keypress('Escape')">
@@ -52,6 +52,35 @@
         </div>
       </div>
     </div>
+    <div class="controller is-mobile">
+      <div class="keyboard">
+        <div class="line">
+          <div class="key" @click="keypress('Escape')">
+            <div class="label">ESC</div>
+          </div>
+          <div class="key key-1" @click="keypress('Digit1')">
+            <div class="label">1</div>
+          </div>
+          <div class="key" @click="keypress('Digit2')">
+            <div class="label">2</div>
+          </div>
+          <div class="key" @click="keypress('Digit3')">
+            <div class="label">3</div>
+          </div>
+          <div class="key" @click="keypress('Digit4')">
+            <div class="label">4</div>
+          </div>
+        </div>
+        <div class="line">
+          <div class="key key-space" @click="keypress('Space')">
+            <div class="label">Space</div>
+          </div>
+        </div>
+      </div>
+      <div class="joystick" ref="mobileController">
+        <div class="label">Gesture<br />Zone</div>
+      </div>
+    </div>
 
     <transition name="fade">
       <div class="message" v-if="message">{{ message }}</div>
@@ -87,6 +116,12 @@ const KEY_MAPS: Record<string, number> = {
   Space: 32, // Space
 }
 
+const JOYSTICK_MAPS: Record<string, string> = {
+  up: 'ArrowUp',
+  down: 'ArrowDown',
+  left: 'ArrowLeft',
+  right: 'ArrowRight',
+}
 
 export default Vue.extend({
   data() {
@@ -99,9 +134,10 @@ export default Vue.extend({
   },
   async mounted() {
     const canvas = this.$refs.canvas
-    // const joystick = create({
-    //   zone: this.$refs.view,
-    // })
+
+    const joystick = create({
+      zone: this.$refs.mobileController,
+    })
 
     blockAddEventListener(document, ['keydown', 'keyup', 'keypress'])
 
@@ -125,6 +161,34 @@ export default Vue.extend({
 
     document.addEventListener('keydown', this.onKeydown)
     document.addEventListener('keyup', this.onKeyup)
+
+    let currentJoystickCode: string | null = null
+    let isRunningJoystick = false
+    const triggerEventStream = (code: string) => {
+      this.keydown(code)
+      setTimeout(() => {
+        this.keyup(code)
+        setTimeout(() => {
+          if (isRunningJoystick) {
+            triggerEventStream(currentJoystickCode)
+          }
+        }, 80)
+      }, 120)
+    }
+    joystick.on('move', (e, data) => {
+      if (data.force > 0.3) {
+        currentJoystickCode = JOYSTICK_MAPS[data.direction.angle]
+        if (isRunningJoystick) {
+          return
+        }
+        isRunningJoystick = true
+        triggerEventStream(currentJoystickCode)
+      }
+    })
+    joystick.on('end', (e, data) => {
+      isRunningJoystick = false
+      currentJoystickCode = null
+    })
 
     let messageSt: any = null
     detectFileChange(fs, SAVE_FILE_PATH, async () => {
@@ -168,22 +232,4 @@ export default Vue.extend({
     },
   },
 })
-
-
-// ;(async () => {
-//   const canvas = document.getElementById('canvas') as HTMLCanvasElement
-//   const $messageSaveFile = document.getElementById('message-savefile')
-//   const $buttonHelp = document.getElementById('button-help')
-//   const $modalHelp = document.getElementById('modal-help')
-//   const $modalHelpClose = document.getElementById('modal-help-close')
-
-//   $buttonHelp.addEventListener('click', () => {
-//     $modalHelp.classList.remove('hidden')
-//   })
-//   $modalHelpClose.addEventListener('click', () => {
-//     fadeOut($modalHelp)
-//   })
-
-// })()
-
 </script>
