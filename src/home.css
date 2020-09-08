@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+}
+
+.view {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.game {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  canvas {
+    width: 100%;
+    image-rendering: auto !important;
+  }
+  .event-blocker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.dosbox-container {
+  width: 100%;
+  max-width: 720px;
+}
+
+.controller {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.keyboard {
+  width: 550px;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  .line {
+    display: flex;
+  }
+  .key {
+    position: relative;
+    box-sizing: border-box;
+    margin: 2px;
+    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      cursor: pointer;
+      background: rgba(255, 255, 255, .125);
+    }
+    &.active,
+    &:active {
+      background: rgba(255, 255, 255, .25);
+    }
+  }
+  .label {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 16px;
+  }
+  .description {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    font-size: 10px;
+  }
+  .key-1 {
+    margin-left: 18px;
+  }
+  .key-q {
+    margin-left: 108px
+  }
+  .key-up {
+    margin-left: 248px
+  }
+  .key-space {
+    margin-left: 18px;
+    width: 316px;
+  }
+  .key-left {
+    margin-left: 18px;
+  }
+}
+
+
+
+.message {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background: rgba(255, 255, 255, .75);
+}
+
+.fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-leave-to {
+  opacity: 0;
+}

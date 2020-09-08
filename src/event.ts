@@ -25,7 +25,7 @@ export function blockAddEventListener(target: HasAddEventListener, events: strin
       handlers[event].push(handler)
       return
     }
-    return originAddEventListener.apply(this, arguments)
+    return originAddEventListener.apply(this, arguments as any)
   }
 }
 
@@ -44,4 +44,14 @@ export function restoreAddEventListener(target: HasAddEventListener) {
     originAddEventListners.delete(target)
   }
   blockedEventHandlers.delete(target)
+}
+
+export function createKeyboardEvent(type: string, keyCode: number) {
+  const event = document.createEvent('KeyboardEvent')
+  Object.defineProperties(event, {
+    type: { get: () => type },
+    keyCode: { get: () => keyCode },
+    which: { get: () => keyCode },
+  })
+  return event
 }

@@ -4,7 +4,8 @@
       "targets": "> 0.25%, not dead, ie >= 11",
       "corejs": 3
     }],
-    "@babel/typescript"
+    "@babel/typescript",
+    "babel-preset-typescript-vue"
   ],
   "plugins": [
     "@babel/plugin-transform-runtime"

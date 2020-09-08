@@ -1,11 +1,12 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 
 module.exports = {
   mode: 'production',
-  entry: __dirname + '/src/index.ts',
+  entry: __dirname + '/src/entry.ts',
   output: {
     path: __dirname +  '/dist',
     filename: 'index.js',
@@ -17,7 +18,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.vue$/,
+        loaders: 'vue-loader',
+      },
+      {
+        test: /\.(js|ts)$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
@@ -34,6 +39,7 @@ module.exports = {
   },
   devtool: '#source-map',
   plugins: [
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: __dirname + '/src/index.html',
