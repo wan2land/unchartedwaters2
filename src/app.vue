@@ -94,7 +94,7 @@ import { create } from 'nipplejs'
 import { createDos } from './dos/create-dos'
 import { detectFileChange } from './fs/detect-file-change'
 import { createIdbFileSystem } from './fs/create-idb-file-system'
-import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, createKeyboardEvent } from './event'
+import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, createKeyboardEvent, EventHandler } from './event'
 
 const SAVE_FILE_PATH = 'KOUKAI2.DAT'
 
@@ -126,17 +126,18 @@ const JOYSTICK_MAPS: Record<string, string> = {
 export default Vue.extend({
   data() {
     return {
-      message: null,
+      message: null as string | null,
       enabledMOdalHelp: true,
-      keydownHandlers: [],
-      keyupHandlers: [],
+      keydownHandlers: [] as EventHandler[],
+      keyupHandlers: [] as EventHandler[],
     }
   },
   async mounted() {
-    const canvas = this.$refs.canvas
+    const canvas = this.$refs.canvas as HTMLCanvasElement
+    const controller = this.$refs.mobileController as HTMLElement
 
     const joystick = create({
-      zone: this.$refs.mobileController,
+      zone: controller,
     })
 
     blockAddEventListener(document, ['keydown', 'keyup', 'keypress'])
@@ -169,7 +170,7 @@ export default Vue.extend({
       setTimeout(() => {
         this.keyup(code)
         setTimeout(() => {
-          if (isRunningJoystick) {
+          if (isRunningJoystick && currentJoystickCode) {
             triggerEventStream(currentJoystickCode)
           }
         }, 80)
@@ -208,23 +209,23 @@ export default Vue.extend({
     document.removeEventListener('keyup', this.onKeyup)
   },
   methods: {
-    onKeydown(e) {
+    onKeydown(e: KeyboardEvent) {
       this.keydown(e.code)
     },
-    onKeyup(e) {
+    onKeyup(e: KeyboardEvent) {
       this.keyup(e.code)
     },
-    keypress(code) {
+    keypress(code: string) {
       this.keydown(code)
       setTimeout(() => this.keyup(code), 120)
     },
-    keydown(code) {
+    keydown(code: string) {
       if (KEY_MAPS[code]) {
         const event = createKeyboardEvent('keydown', KEY_MAPS[code])
         this.keydownHandlers.forEach(handler => handler(event))
       }
     },
-    keyup(code) {
+    keyup(code: string) {
       if (KEY_MAPS[code]) {
         const event = createKeyboardEvent('keyup', KEY_MAPS[code])
         this.keyupHandlers.forEach(handler => handler(event))
