@@ -44,6 +44,8 @@
     <transition name="fade">
       <div class="message" v-if="message">{{ message }}</div>
     </transition>
+
+    <div class="version">v{{ version }}</div>
   </div>
 </template>
 <script lang="ts">
@@ -55,6 +57,8 @@ import { createDos } from './dos/create-dos'
 import { detectFileChange } from './fs/detect-file-change'
 import { createIdbFileSystem } from './fs/create-idb-file-system'
 import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, createKeyboardEvent, EventHandler } from './event'
+
+const version = require('../package.json').version
 
 const SAVE_FILE_PATH = 'KOUKAI2.DAT'
 
@@ -224,6 +228,11 @@ export default Vue.extend({
   beforeDestroy() {
     document.removeEventListener('keydown', this.onKeydown)
     document.removeEventListener('keyup', this.onKeyup)
+  },
+  computed: {
+    version() {
+      return version
+    },
   },
   methods: {
     onKeydown(e: KeyboardEvent) {

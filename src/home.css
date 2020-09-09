@@ -145,6 +145,15 @@ body {
   opacity: 0;
 }
 
+.version {
+  pointer-events: none;
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  color: #333;
+  font-size: 14px;
+}
+
 @media (min-width: 576px) {
   .controller {
     .container {
