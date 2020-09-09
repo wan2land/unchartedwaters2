@@ -24,13 +24,18 @@ body {
 }
 
 .game {
-  flex: 0 0 50%;
   position: relative;
   display: flex;
   justify-content: center;
   canvas {
     width: 100%;
     image-rendering: auto !important;
+  }
+  .canvas {
+    width: 100%;
+    background: #333;
+    height: 0;
+    padding-top: 66.66666%
   }
   .event-blocker {
     position: absolute;
@@ -48,78 +53,21 @@ body {
 
 .controller {
   position: relative;
-  flex: 0 0 50%;
-  margin-top: 8px;
-  display: flex;
-  justify-content: center;
+  flex: 1 1 auto;
+  margin-top: -16px;
   -webkit-user-drag: none;
   -webkit-user-select: none;
-}
-
-.controller.is-desktop {
-  display: none;
-  .keyboard {
-    width: 550px;
-    .line {
-      display: flex;
-    }
-    .key {
-      position: relative;
-      box-sizing: border-box;
-      margin: 2px;
-      border-radius: 8px;
-      width: 60px;
-      height: 60px;
-      border: 1px solid #fff;
-      color: #fff;
-      &:hover {
-        cursor: pointer;
-        background: rgba(255, 255, 255, .125);
-      }
-      &.active,
-      &:active {
-        background: rgba(255, 255, 255, .25);
-      }
-    }
-    .label {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      font-size: 16px;
-    }
-    .description {
-      position: absolute;
-      bottom: 6px;
-      left: 6px;
-      font-size: 10px;
-    }
-    .key-1 {
-      margin-left: 18px;
-    }
-    .key-q {
-      margin-left: 108px
-    }
-    .key-up {
-      margin-left: 248px
-    }
-    .key-space {
-      margin-left: 18px;
-      width: 316px;
-    }
-    .key-left {
-      margin-left: 18px;
-    }
+  .container {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
   }
-}
-
-.controller.is-mobile {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
   .keyboard {
-    width: 240px;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
+    display: flex;
     .line {
       display: flex;
     }
@@ -130,8 +78,8 @@ body {
       border-radius: 8px;
       width: 44px;
       height: 44px;
-      border: 1px solid #fff;
-      color: #fff;
+      border: 1px solid #aaa;
+      color: #aaa;
       &:hover {
         cursor: pointer;
         background: rgba(255, 255, 255, .125);
@@ -145,7 +93,10 @@ body {
       position: absolute;
       top: 6px;
       left: 6px;
-      font-size: 16px;
+      font-size: 12px;
+    }
+    .description {
+      display: none;
     }
     .description {
       position: absolute;
@@ -153,17 +104,20 @@ body {
       left: 6px;
       font-size: 10px;
     }
-    .key-space {
-      width: 236px;
+    .key-enter {
+      height: 140px;
     }
   }
   .joystick {
-    position: relative;
     flex: 1 1 auto;
+    position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 2px;
+    background: #111;
+    border-radius: 8px;
     .label {
       font-size: 40px;
       text-align: center;
@@ -193,12 +147,52 @@ body {
 
 @media (min-width: 576px) {
   .controller {
-    flex: 1 1 auto;
+    .container {
+      max-width: 540px;
+    }
   }
-  .controller.is-desktop {
-    display: flex;
+}
+@media (min-width: 768px) {
+  .controller {
+    .container {
+      max-width: 720px;
+    }
   }
-  .controller.is-mobile {
-    display: none;
+}
+@media (min-width: 992px) {
+  .controller {
+    .container {
+      max-width: 960px;
+    }
+    .keyboard {
+      .key {
+        width: 60px;
+        height: 60px;
+        .label {
+          font-size: 16px;
+        }
+        .description {
+          display: block;
+        }
+      }
+      .key-enter {
+        height: 188px;
+      }
+    }
+  }
+}
+
+@media (orientation: landscape) {
+  .controller {
+    position: absolute;
+    flex: none;
+    margin-top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .container {
+      flex-flow: row;
+      align-items: stretch;
+    }
   }
 }

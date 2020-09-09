@@ -2,83 +2,42 @@
   <div class="view" @touchstart.stop>
     <div class="game">
       <canvas ref="canvas"></canvas>
+      <!-- <div class="dosbox-container">
+        <div class="canvas"></div>
+      </div> -->
       <div class="event-blocker"></div>
     </div>
-    <div class="controller is-desktop">
-      <div class="keyboard">
-        <div class="line">
-          <div class="key" @click="keypress('Escape')">
-            <div class="label">ESC</div>
+    <div class="controller">
+      <div class="container">
+        <div class="keyboard">
+          <div class="col">
+            <div class="line">
+              <Key label="ESC" @click="keypress('Escape')" />
+              <Key label="Q" description="Open<br />Menu 1" @click="keypress('KeyQ')" />
+              <Key label="W" description="Open<br />Menu 2" @click="keypress('KeyW')" />
+              <Key label="E" description="Open<br />Menu 3" @click="keypress('KeyE')" />
+              <Key label="R" description="Open<br />Menu 4" @click="keypress('KeyR')" />
+            </div>
+            <div class="line">
+              <Key label="1" @click="keypress('Digit1')" />
+              <Key label="2" @click="keypress('Digit2')" />
+              <Key label="3" @click="keypress('Digit3')" />
+              <Key label="4" @click="keypress('Digit4')" />
+              <Key label="5" @click="keypress('Digit5')" />
+            </div>
+            <div class="line">
+              <Key label="6" @click="keypress('Digit6')" />
+              <Key label="7" @click="keypress('Digit7')" />
+              <Key label="8" @click="keypress('Digit8')" />
+              <Key label="9" @click="keypress('Digit9')" />
+              <Key label="0" @click="keypress('Digit0')" />
+            </div>
           </div>
-          <div class="key key-1" @click="keypress('Digit1')">
-            <div class="label">1</div>
-            <div class="description">Open<br />Menu 1</div>
-          </div>
-          <div class="key" @click="keypress('Digit2')">
-            <div class="label">2</div>
-            <div class="description">Open<br />Menu 2</div>
-          </div>
-          <div class="key" @click="keypress('Digit3')">
-            <div class="label">3</div>
-            <div class="description">Open<br />Menu 3</div>
-          </div>
-          <div class="key" @click="keypress('Digit4')">
-            <div class="label">4</div>
-            <div class="description">Open<br />Menu 4</div>
-          </div>
+          <Key class="key-enter" label="Enter" @click="keypress('Enter')" />
         </div>
-        <div class="line">
-          <div class="key key-q" @click="keypress('KeyQ')">
-            <div class="label">Q</div>
-            <div class="description">Set<br />Dest.</div>
-          </div>
-          <div class="key key-up" @click="keypress('ArrowUp')">
-            <div class="label">↑</div>
-          </div>
+        <div class="joystick" ref="mobileController">
+          <div class="label">Gesture<br />Zone</div>
         </div>
-        <div class="line">
-          <div class="key key-space" @click="keypress('Space')">
-            <div class="label">Space</div>
-          </div>
-          <div class="key key-left" @click="keypress('ArrowLeft')">
-            <div class="label">←</div>
-          </div>
-          <div class="key" @click="keypress('ArrowDown')">
-            <div class="label">↓</div>
-          </div>
-          <div class="key" @click="keypress('ArrowRight')">
-            <div class="label">→</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="controller is-mobile">
-      <div class="keyboard">
-        <div class="line">
-          <div class="key" @click="keypress('Escape')">
-            <div class="label">ESC</div>
-          </div>
-          <div class="key key-1" @click="keypress('Digit1')">
-            <div class="label">1</div>
-          </div>
-          <div class="key" @click="keypress('Digit2')">
-            <div class="label">2</div>
-          </div>
-          <div class="key" @click="keypress('Digit3')">
-            <div class="label">3</div>
-          </div>
-          <div class="key" @click="keypress('Digit4')">
-            <div class="label">4</div>
-          </div>
-        </div>
-        <div class="line">
-          <div class="key key-space" @click="keypress('Space')">
-            <div class="label">Space</div>
-          </div>
-        </div>
-      </div>
-      <div class="joystick" ref="mobileController">
-        <div class="label">Gesture<br />Zone</div>
       </div>
     </div>
 
@@ -91,6 +50,7 @@
 import Vue from 'vue'
 import { create } from 'nipplejs'
 
+import Key from './components/key.vue'
 import { createDos } from './dos/create-dos'
 import { detectFileChange } from './fs/detect-file-change'
 import { createIdbFileSystem } from './fs/create-idb-file-system'
@@ -99,21 +59,53 @@ import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, crea
 const SAVE_FILE_PATH = 'KOUKAI2.DAT'
 
 const KEY_MAPS: Record<string, number> = {
-  Digit1: 111, // /
-  Digit2: 106, // *
-  Digit3: 109, // -
-  Digit4: 107, // +
+  // Original Keypad
+  Digit0: 48,
+  Digit1: 49,
+  Digit2: 50,
+  Digit3: 51,
+  Digit4: 52,
+  Digit5: 53,
+  Digit6: 54,
+  Digit7: 55,
+  Digit8: 56,
+  Digit9: 57,
+
+  Numpad0: 96,
+  Numpad1: 97,
+  Numpad2: 98,
+  Numpad3: 99,
+  Numpad4: 100,
+  Numpad5: 101,
+  Numpad6: 102,
+  Numpad7: 103,
+  Numpad8: 104,
+  Numpad9: 105,
+
+  NumpadAdd: 107,
+  NumpadSubtract: 109,
+  NumpadMultiply: 106,
+  NumpadDivide: 111,
+  NumpadEqual: 198,
+  NumpadEnter: 13,
+
+  NumpadDecimal: 110,
+
+  Enter: 13, // Enter
+  Space: 32, // Space
+
+  ArrowLeft: 37,
+  ArrowUp: 38,
+  ArrowRight: 39,
+  ArrowDown: 40,
 
   Escape: 27, // Escape
 
-  ArrowUp: 104, // RightDigit8
-  ArrowDown: 98, // RightDigit2
-  ArrowLeft: 100, // RightDigit4
-  ArrowRight: 102, // RightDigit6
-
-  KeyQ: 101, // RightDigit5
-  Enter: 13, // Enter
-  Space: 32, // Space
+  // Extend
+  KeyQ: 107, // +
+  KeyW: 109, // -
+  KeyE: 106, // *
+  KeyR: 111, // /
 }
 
 const JOYSTICK_MAPS: Record<string, string> = {
@@ -124,6 +116,9 @@ const JOYSTICK_MAPS: Record<string, string> = {
 }
 
 export default Vue.extend({
+  components: {
+    Key,
+  },
   data() {
     return {
       message: null as string | null,
@@ -210,6 +205,7 @@ export default Vue.extend({
   },
   methods: {
     onKeydown(e: KeyboardEvent) {
+      console.log(e.code, e.keyCode)
       this.keydown(e.code)
     },
     onKeyup(e: KeyboardEvent) {
