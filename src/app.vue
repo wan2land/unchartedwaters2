@@ -94,10 +94,10 @@ const KEY_MAPS: Record<string, number> = {
   Enter: 13, // Enter
   Space: 32, // Space
 
-  ArrowLeft: 37,
-  ArrowUp: 38,
-  ArrowRight: 39,
-  ArrowDown: 40,
+  ArrowLeft: 100,
+  ArrowUp: 104,
+  ArrowRight: 102,
+  ArrowDown: 98,
 
   Escape: 27, // Escape
 
@@ -106,6 +106,12 @@ const KEY_MAPS: Record<string, number> = {
   KeyW: 109, // -
   KeyE: 106, // *
   KeyR: 111, // /
+
+  // Special
+  ArrowLeftDown: 97,
+  ArrowRightDown: 99,
+  ArrowLeftUp: 103,
+  ArrowRightUp: 105,
 }
 
 const JOYSTICK_MAPS: Record<string, string> = {
@@ -168,12 +174,28 @@ export default Vue.extend({
           if (isRunningJoystick && currentJoystickCode) {
             triggerEventStream(currentJoystickCode)
           }
-        }, 80)
-      }, 120)
+        }, 60)
+      }, 100)
     }
     joystick.on('move', (e, data) => {
       if (data.force > 0.3) {
-        currentJoystickCode = JOYSTICK_MAPS[data.direction.angle]
+        if (data.angle.degree >= 22.5 && data.angle.degree < 67.5) {
+          currentJoystickCode = 'ArrowRightUp'
+        } else if (data.angle.degree >= 67.5 && data.angle.degree < 112.5) {
+          currentJoystickCode = 'ArrowUp'
+        } else if (data.angle.degree >= 112.5 && data.angle.degree < 157.5) {
+          currentJoystickCode = 'ArrowLeftUp'
+        } else if (data.angle.degree >= 157.5 && data.angle.degree < 202.5) {
+          currentJoystickCode = 'ArrowLeft'
+        } else if (data.angle.degree >= 202.5 && data.angle.degree < 247.5) {
+          currentJoystickCode = 'ArrowLeftDown'
+        } else if (data.angle.degree >= 247.5 && data.angle.degree < 292.5) {
+          currentJoystickCode = 'ArrowDown'
+        } else if (data.angle.degree >= 292.5 && data.angle.degree < 337.5) {
+          currentJoystickCode = 'ArrowRightDown'
+        } else {
+          currentJoystickCode = 'ArrowRight'
+        }
         if (isRunningJoystick) {
           return
         }
@@ -205,7 +227,6 @@ export default Vue.extend({
   },
   methods: {
     onKeydown(e: KeyboardEvent) {
-      console.log(e.code, e.keyCode)
       this.keydown(e.code)
     },
     onKeyup(e: KeyboardEvent) {
