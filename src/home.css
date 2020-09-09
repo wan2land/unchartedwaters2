@@ -54,13 +54,15 @@ body {
 
 .controller {
   position: relative;
+  display: flex;
   flex: 1 1 auto;
   margin-top: -16px;
   -webkit-user-drag: none;
   -webkit-user-select: none;
+  align-items: stretch;
   .container {
-    height: 100%;
     display: flex;
+    width: 100%;
     flex-flow: column;
     align-items: center;
     margin-left: auto;
@@ -81,6 +83,7 @@ body {
       height: 44px;
       border: 1px solid #aaa;
       color: #aaa;
+      background: rgba(255, 255, 255, .03125);
       &:hover {
         cursor: pointer;
         background: rgba(255, 255, 255, .125);
@@ -117,12 +120,12 @@ body {
     align-items: center;
     justify-content: center;
     margin: 2px;
-    background: #111;
+    background: rgba(255, 255, 255, .0625);
     border-radius: 8px;
     .label {
       font-size: 40px;
       text-align: center;
-      color: #333;
+      color: rgba(255, 255, 255, .125);
     }
   }
 }
@@ -205,6 +208,13 @@ body {
       .key-enter {
         height: 188px;
       }
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .controller {
+    .container {
+      max-width: 1140px;
     }
   }
 }
