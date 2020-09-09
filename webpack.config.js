@@ -9,7 +9,7 @@ module.exports = {
   entry: __dirname + '/src/entry.ts',
   output: {
     path: __dirname +  '/dist',
-    filename: 'index.js',
+    filename: '[name]_[hash].js',
     libraryTarget: 'umd',
   },
   resolve: {
@@ -45,7 +45,7 @@ module.exports = {
       template: __dirname + '/src/index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: '[name]_[hash].css',
     }),
     new CopyWebpackPlugin({
       patterns: [
