@@ -51,13 +51,12 @@
 import Vue from 'vue'
 import { create } from 'nipplejs'
 
-import Key from './components/key.vue'
+import Key from '../components/key.vue'
 import { createDos } from '../dos/create-dos'
 import { detectFileChange } from '../fs/detect-file-change'
 import { createIdbFileSystem } from '../fs/create-idb-file-system'
 import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, createKeyboardEvent, EventHandler } from '../event'
 
-const version = require('../package.json').version
 
 const SAVE_FILE_PATH = 'KOUKAI2.DAT'
 
@@ -128,6 +127,14 @@ export default Vue.extend({
   components: {
     Key,
   },
+  props: {
+    mod: {
+      type: String,
+    },
+    entry: {
+      type: String,
+    },
+  },
   data() {
     return {
       message: null as string | null,
@@ -146,10 +153,16 @@ export default Vue.extend({
 
     blockAddEventListener(document, ['keydown', 'keyup', 'keypress'])
 
-    const db = await createIdbFileSystem('water2', 1)
+    const db = this.mod
+      ? await createIdbFileSystem(this.mod, 1)
+      : await createIdbFileSystem('water2', 1)
     const { fs, main } = await createDos(canvas)
 
-    await fs.extract('/static/water2.zip')
+    if (this.mod) {
+      await fs.extract(`/static/${this.mod}.zip`)
+    } else {
+      await fs.extract('/static/water2.zip')
+    }
     
     const saveFileBody = await db.load<Uint8Array>(SAVE_FILE_PATH)
     if (saveFileBody) {
@@ -157,7 +170,7 @@ export default Vue.extend({
       ;(fs as any).fs.writeFile(SAVE_FILE_PATH, saveFileBody)
     }
 
-    const ci = await main(['-c', 'KOEI.COM'])
+    const ci = await main(['-c', this.entry ?? 'KOEI.COM'])
 
     this.keydownHandlers = getBlockedHandler(document, 'keydown')
     this.keyupHandlers = getBlockedHandler(document, 'keyup')
@@ -227,11 +240,6 @@ export default Vue.extend({
   beforeDestroy() {
     document.removeEventListener('keydown', this.onKeydown)
     document.removeEventListener('keyup', this.onKeyup)
-  },
-  computed: {
-    version() {
-      return version
-    },
   },
   methods: {
     onKeydown(e: KeyboardEvent) {

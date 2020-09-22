@@ -27,6 +27,12 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        use: {
+          loader: 'url-loader',
+        },
+      },
+      {
         test: /\.css$/,
         use: [
           // 'style-loader',
@@ -53,6 +59,7 @@ module.exports = {
         { from: __dirname + '/node_modules/js-dos/dist/wdosbox.js', to: 'static' },
         { from: __dirname + '/node_modules/js-dos/dist/wdosbox.wasm.js', to: 'static' },
         { from: 'game/water2.zip', to: 'static' },
+        { from: 'game/mod_ernst_v1.11.zip', to: 'static' },
       ],
     }),
   ],

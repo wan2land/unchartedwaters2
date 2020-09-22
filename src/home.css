@@ -23,6 +23,64 @@ body {
   justify-content: center;
 }
 
+.splash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu {
+  position: relative;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 2px #000,
+    inset 0 0 0 4px #D34100,
+    inset 0 0 0 6px #F3A261,
+    inset 0 0 0 8px #000000,
+    inset 0 0 0 10px #D34100,
+    inset 0 0 0 12px #00A261,
+    inset 0 0 0 14px #D34100,
+    inset 0 0 0 16px #F3E3D3;
+  background: #F3E3D3;
+  position: absolute;
+  padding: 24px;
+  .corner {
+    position: absolute;
+    background: url(./assets/corner.png) no-repeat;
+    background-size: 32px 32px;
+    background-color: #000;
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+  }
+  .corner-tl {
+    top: 0;
+    left: 0;
+  }
+  .corner-tr {
+    top: 0;
+    right: 0;
+    background-position: -16px 0;
+  }
+  .corner-bl {
+    bottom: 0;
+    left: 0;
+    background-position: 0 -16px;
+  }
+  .corner-br {
+    bottom: 0;
+    right: 0;
+    background-position: -16px -16px;
+  }
+  .menu-item {
+    cursor: pointer;
+    display: block;
+    padding: 4px 6px;
+  }
+  .menu-item:hover {
+    background: #000;
+    color: #F3E3D3
+  }
+}
+
 .game {
   position: relative;
   display: flex;
