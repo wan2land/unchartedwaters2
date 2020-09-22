@@ -137,6 +137,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      isClearExit: false,
       message: null as string | null,
       enabledMOdalHelp: true,
       keydownHandlers: [] as EventHandler[],
@@ -231,17 +232,30 @@ export default Vue.extend({
       if (messageSt) {
         clearTimeout(messageSt)
       }
+      this.isClearExit = true
       messageSt = setTimeout(() => {
         this.message = null
         messageSt = null
+        setTimeout(() => {
+          this.isClearExit = false
+        }, 5000)
       }, 100)
     })
+    window.addEventListener('beforeunload', this.onBeforeUnload)
   },
   beforeDestroy() {
     document.removeEventListener('keydown', this.onKeydown)
     document.removeEventListener('keyup', this.onKeyup)
+    window.removeEventListener('beforeunload', this.onBeforeUnload)
   },
   methods: {
+    onBeforeUnload(e: BeforeUnloadEvent) {
+      if (this.isClearExit) {
+        return
+      }
+      e.preventDefault()
+      return e.returnValue = '페이지를 벗어나면 저장하지 않은 내용이 날아갈 수 있습니다.'
+    },
     onKeydown(e: KeyboardEvent) {
       this.keydown(e.code)
     },
