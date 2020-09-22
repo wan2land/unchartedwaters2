@@ -29,4 +29,7 @@
 
 ## 실행
 
+**윈도우 익스플로러**는 지원하지 않습니다. 반드시 [크롬](https://www.google.com/chrome/)이나, [파이어폭스](https://www.mozilla.org/ko/firefox/new/),
+또는, 모바일 브라우저에서 실행해주시기 바랍니다.
+
 **[게임 시작하기](http://unchartedwater2.wani.kr)**
