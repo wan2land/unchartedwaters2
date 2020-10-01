@@ -59,6 +59,7 @@ module.exports = {
         { from: __dirname + '/node_modules/js-dos/dist/wdosbox.js', to: 'static' },
         { from: __dirname + '/node_modules/js-dos/dist/wdosbox.wasm.js', to: 'static' },
         { from: 'game/water2.zip', to: 'static' },
+        { from: 'game/mod_junghwa_v3.0.zip', to: 'static' },
         { from: 'game/mod_ernst_v1.11.zip', to: 'static' },
       ],
     }),
