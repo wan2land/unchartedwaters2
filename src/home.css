@@ -29,12 +29,6 @@ body {
   justify-content: center;
 }
 
-.icon {
-  svg {
-    fill: #fff;
-  }
-}
-
 .menu {
   position: relative;
   box-sizing: border-box;
@@ -98,6 +92,7 @@ body {
     flex: 0 0 40px;
     padding: 12px 0;
     background: #161616;
+    justify-content: space-between; 
   }
   .tool-item {
     display: block;
@@ -105,10 +100,23 @@ body {
     padding: 8px;
     width: 24px;
     height: 24px;
+    svg {
+      fill: #fff;
+    }
+  }
+  .tool-item.disabled {
+    svg {
+      fill: #777;
+    }
   }
   .screen {
     flex: 1 1 auto;
   }
+}
+
+.dosbox-container {
+  width: 100%;
+  height: 100%;
 }
 
 .screen {
@@ -135,32 +143,13 @@ body {
     top: 0;
     bottom: 0;
   }
-}
 
-.dosbox-container {
-  width: 100%;
-  height: 100%;
-}
-
-.controller {
-  position: relative;
-  display: flex;
-  flex: 1 1 auto;
-  margin-top: -16px;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  align-items: stretch;
-  .container {
-    display: flex;
-    width: 100%;
-    flex-flow: column;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 15px;
-  }
   .keyboard {
+    position: absolute;
+    right: 0;
+    bottom: 0;
     display: flex;
+    user-select: none;
     .line {
       display: flex;
     }
@@ -168,19 +157,14 @@ body {
       position: relative;
       box-sizing: border-box;
       margin: 2px;
-      border-radius: 8px;
+      border-radius: 4px;
       width: 44px;
       height: 44px;
-      border: 1px solid #aaa;
-      color: #aaa;
-      background: rgba(255, 255, 255, .03125);
-      &:hover {
-        cursor: pointer;
-        background: rgba(255, 255, 255, .125);
-      }
+      color: #fff;
+      background: rgba(0, 0, 0, .375);
       &.active,
       &:active {
-        background: rgba(255, 255, 255, .25);
+        background: rgba(80, 80, 80, .375);
       }
     }
     .label {
@@ -188,6 +172,10 @@ body {
       top: 6px;
       left: 6px;
       font-size: 12px;
+      .or {
+        font-size: 75%;
+        color: rgba(255, 255, 255, .375);
+      }
     }
     .description {
       display: none;
@@ -197,9 +185,19 @@ body {
       bottom: 6px;
       left: 6px;
       font-size: 10px;
+      color: rgba(255, 255, 255, .625);
     }
-    .key-enter {
+    .key-row-2 {
+      height: 92px;
+    }
+    .key-row-3 {
       height: 140px;
+    }
+    .key-col-2 {
+      width: 92px;
+    }
+    .key-col-3 {
+      width: 140px;
     }
   }
   .joystick {
@@ -266,60 +264,42 @@ body {
 }
 
 @media (min-width: 576px) {
-  .controller {
-    .container {
-      max-width: 540px;
-    }
-  }
 }
 @media (min-width: 768px) {
-  .controller {
-    .container {
-      max-width: 720px;
-    }
-  }
 }
 @media (min-width: 992px) {
-  .controller {
-    .container {
-      max-width: 960px;
-    }
+  .game {
+    flex-flow: row;
+  }
+  .screen {
     .keyboard {
       .key {
         width: 60px;
         height: 60px;
         .label {
-          font-size: 16px;
+          font-size: 14px;
         }
         .description {
           display: block;
         }
       }
-      .key-enter {
+      .key-row-2 {
+        height: 124px;
+      }
+      .key-row-3 {
         height: 188px;
+      }
+      .key-col-2 {
+        width: 124px;
+      }
+      .key-col-3 {
+        width: 188px;
       }
     }
   }
 }
 @media (min-width: 1200px) {
-  .controller {
-    .container {
-      max-width: 1140px;
-    }
-  }
 }
 
 @media (orientation: landscape) {
-  .controller {
-    position: absolute;
-    flex: none;
-    margin-top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    .container {
-      flex-flow: row;
-      align-items: stretch;
-    }
-  }
 }
