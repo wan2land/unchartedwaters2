@@ -1,6 +1,6 @@
 {
   "name": "unchartedwater2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js --host 0.0.0.0 --mode development",
     "build": "webpack --config webpack.config.js",
