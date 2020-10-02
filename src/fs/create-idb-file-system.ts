@@ -1,5 +1,10 @@
 
-export async function createIdbFileSystem(name: string, version?: number) {
+export interface IdbFileSystem {
+  save(key: string, data: any): Promise<void>
+  load<T>(key: string): Promise<T | null>
+}
+
+export async function createIdbFileSystem(name: string, version?: number): Promise<IdbFileSystem> {
   const db = await new Promise<IDBDatabase>(resolve => {
     const idb = window.indexedDB.open(name, version)
     idb.onupgradeneeded = function () {
