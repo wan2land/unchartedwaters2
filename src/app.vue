@@ -11,13 +11,13 @@
           <div class="corner corner-bl"></div>
           <div class="corner corner-br"></div>
           <a class="menu-item" @click="onStartGame()">대항해시대2 플레이</a>
-          <a class="menu-item" @click="onStartGame('mod_junghwa_v3.0')">정화편(v3.0) 플레이</a>
+          <a class="menu-item" @click="onStartGame('mod_junghwa_v3.0', null, 'CHENGHO.DAT')">정화편(v3.0) 플레이</a>
           <a class="menu-item" @click="onStartGame('mod_ernst_v1.11', 'PLAY.BAT')">에르네스트 모드(v1.11) 플레이</a>
         </div>
       </div>
     </template>
     <template v-else>
-      <Game :mod="gameMod" :entry="gameEntry" />
+      <Game :mod="gameMod" :entry="gameEntry || undefined" :save="gameSave || undefined" />
     </template>
 
     <div class="version">v{{ version }}</div>
@@ -45,6 +45,7 @@ export default Vue.extend({
       isSplash: true,
       gameMod: null as string | null,
       gameEntry: null as string | null,
+      gameSave: null as string | null,
     }
   },
   computed: {
@@ -53,9 +54,10 @@ export default Vue.extend({
     },
   },
   methods: {
-    onStartGame(gameMod?: string, gameEntry?: string) {
+    onStartGame(gameMod?: string, gameEntry?: string, gameSave?: string) {
       this.gameMod = gameMod ?? null
       this.gameEntry = gameEntry ?? null
+      this.gameSave = gameSave ?? null
       this.isSplash = false
     },
   },

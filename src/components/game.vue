@@ -144,8 +144,6 @@ import { createIdbFileSystem, IdbFileSystem } from '../fs/create-idb-file-system
 import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, createKeyboardEvent, EventHandler } from '../event'
 
 
-const SAVE_FILE_PATH = 'KOUKAI2.DAT'
-
 const KEY_MAPS: Record<string, number> = {
   // Original Keypad
   Digit0: 48,
@@ -222,6 +220,11 @@ export default Vue.extend({
     },
     entry: {
       type: String,
+      default: 'KOEI.COM',
+    },
+    save: {
+      type: String,
+      default: 'KOUKAI2.DAT',
     },
   },
   data() {
@@ -262,13 +265,13 @@ export default Vue.extend({
       await fs.extract('/static/water2.zip')
     }
     
-    const saveFileBody = await db.load<Uint8Array>(SAVE_FILE_PATH)
+    const saveFileBody = await db.load<Uint8Array>(this.save)
     if (saveFileBody) {
       // Overwrite Save File
-      ;(fs as any).fs.writeFile(SAVE_FILE_PATH, saveFileBody)
+      ;(fs as any).fs.writeFile(this.save, saveFileBody)
     }
 
-    const ci = await main(['-c', this.entry ?? 'KOEI.COM'])
+    const ci = await main(['-c', this.entry])
 
     this.keydownHandlers = getBlockedHandler(document, 'keydown')
     this.keyupHandlers = getBlockedHandler(document, 'keyup')
@@ -323,8 +326,8 @@ export default Vue.extend({
     })
 
     let messageSt: any = null
-    detectFileChange(fs, SAVE_FILE_PATH, async () => {
-      db.save(SAVE_FILE_PATH, (fs as any).fs.readFile(SAVE_FILE_PATH))
+    detectFileChange(fs, this.save, async () => {
+      db.save(this.save, (fs as any).fs.readFile(this.save))
       this.toastMessage('세이브 파일이 브라우저에 저장되었습니다.', 1000)
       this.isClearExit = true
       setTimeout(() => {
@@ -391,8 +394,9 @@ export default Vue.extend({
       if (!this.$database) {
         return
       }
-      const data = await this.$database.load<Uint8Array>(SAVE_FILE_PATH)
+      const data = await this.$database.load<Uint8Array>(this.save)
       if (!data) {
+        console.log('!')
         return
       }
       const url = URL.createObjectURL(new Blob([data], {
@@ -400,7 +404,7 @@ export default Vue.extend({
       }))
       const a = document.createElement('a')
       a.href = url
-      a.download = SAVE_FILE_PATH
+      a.download = this.save
       a.style.display = 'none'
       document.body.appendChild(a)
       a.click()
@@ -416,7 +420,7 @@ export default Vue.extend({
         return
       }
       const data = new Uint8Array(await files[0].arrayBuffer())
-      db.save(SAVE_FILE_PATH, data)
+      db.save(this.save, data)
       this.toastMessage('세이브 파일이 브라우저에 저장되었습니다.<br />새로고침 후 파일을 불러 올 수 있습니다.')
     },
     toggleKeyboard() {
