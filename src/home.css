@@ -200,22 +200,6 @@ body {
       width: 140px;
     }
   }
-  .joystick {
-    flex: 1 1 auto;
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 2px;
-    background: rgba(255, 255, 255, .0625);
-    border-radius: 8px;
-    .label {
-      font-size: 40px;
-      text-align: center;
-      color: rgba(255, 255, 255, .125);
-    }
-  }
 }
 
 
