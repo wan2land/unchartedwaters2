@@ -26,6 +26,7 @@
    - 가상 키패드를 활용해서 게임을 진행할 수 있습니다.
  - 모드 추가
    - [에르네스트 모드 v1.11](https://cafe.naver.com/daehangs/71466) 추가
+   - [정화편 v3.0](https://cafe.naver.com/daehangs/52187) 추가
 
 ## 실행
 
