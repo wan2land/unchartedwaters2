@@ -2,6 +2,9 @@
   <div class="view" @touchstart.stop>
     <template v-if="isSplash">
       <div class="splash">
+        <div class="logo">
+          <img :src="require('./assets/logo.gif').default" />
+        </div>
         <div class="menu">
           <div class="corner corner-tl"></div>
           <div class="corner corner-tr"></div>
