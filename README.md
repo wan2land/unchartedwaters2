@@ -1,4 +1,4 @@
-# Uncharted Water 2 for Web
+# Uncharted Waters II for Web
 
 <p align="center">
   <img src="./screenshot.png" alt="Uncharted Water Play" width="600" />
