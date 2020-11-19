@@ -1,5 +1,10 @@
 <template>
-  <div class="key" @click="$emit('click', $event)">
+  <div class="key"
+       @mousedown.prevent="$emit('mousedown', $event)"
+       @touchstart.prevent="$emit('touchstart', $event)"
+       @mouseup.prevent="$emit('mouseup', $event)"
+       @touchend.prevent="$emit('touchend', $event)"
+  >
     <div class="label">
       <span v-html="label" />
       <template v-if="sublabel">

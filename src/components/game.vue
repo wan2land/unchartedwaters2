@@ -84,43 +84,138 @@
       <div class="keyboard" v-if="enabledToggleKeyboard">
         <div class="col">
           <div class="line">
-            <Key label="/" sublabel="Q" description="Menu 4" @click="keypress('KeyQ')" />
-            <Key label="*" sublabel="W" description="Menu 3" @click="keypress('KeyW')" />
-            <Key label="-" sublabel="E" description="Menu 2" @click="keypress('KeyE')" />
+            <Key label="/" sublabel="Q" description="Menu 4"
+                 @mousedown.prevent="keydown('KeyQ')"
+                 @touchstart.prevent="keydown('KeyQ')"
+                 @mouseup.prevent="keyup('KeyQ')"
+                 @touchend.prevent="keyup('KeyQ')"
+            />
+            <Key label="*" sublabel="W" description="Menu 3"
+                 @mousedown.prevent="keydown('KeyW')"
+                 @touchstart.prevent="keydown('KeyW')"
+                 @mouseup.prevent="keyup('KeyW')"
+                 @touchend.prevent="keyup('KeyW')"
+            />
+            <Key label="-" sublabel="E" description="Menu 2"
+                 @mousedown.prevent="keydown('KeyE')"
+                 @touchstart.prevent="keydown('KeyE')"
+                 @mouseup.prevent="keyup('KeyE')"
+                 @touchend.prevent="keyup('KeyE')"
+            />
           </div>
           <div class="line">
-            <Key label="7" @click="keypress('Digit7')" />
-            <Key label="8" @click="keypress('Digit8')" />
-            <Key label="9" @click="keypress('Digit9')" />
+            <Key label="7"
+                 @mousedown.prevent="keydown('Digit7')"
+                 @touchstart.prevent="keydown('Digit7')"
+                 @mouseup.prevent="keyup('Digit7')"
+                 @touchend.prevent="keyup('Digit7')"
+            />
+            <Key label="8"
+                 @mousedown.prevent="keydown('Digit8')"
+                 @touchstart.prevent="keydown('Digit8')"
+                 @mouseup.prevent="keyup('Digit8')"
+                 @touchend.prevent="keyup('Digit8')"
+            />
+            <Key label="9"
+                 @mousedown.prevent="keydown('Digit9')"
+                 @touchstart.prevent="keydown('Digit9')"
+                 @mouseup.prevent="keyup('Digit9')"
+                 @touchend.prevent="keyup('Digit9')"
+            />
           </div>
           <div class="line">
-            <Key label="4" @click="keypress('Digit4')" />
-            <Key label="5" @click="keypress('Digit5')" />
-            <Key label="6" @click="keypress('Digit6')" />
+            <Key label="4"
+                 @mousedown.prevent="keydown('Digit4')"
+                 @touchstart.prevent="keydown('Digit4')"
+                 @mouseup.prevent="keyup('Digit4')"
+                 @touchend.prevent="keyup('Digit4')"
+            />
+            <Key label="5"
+                 @mousedown.prevent="keydown('Digit5')"
+                 @touchstart.prevent="keydown('Digit5')"
+                 @mouseup.prevent="keyup('Digit5')"
+                 @touchend.prevent="keyup('Digit5')"
+            />
+            <Key label="6"
+                 @mousedown.prevent="keydown('Digit6')"
+                 @touchstart.prevent="keydown('Digit6')"
+                 @mouseup.prevent="keyup('Digit6')"
+                 @touchend.prevent="keyup('Digit6')"
+            />
           </div>
           <div class="line">
-            <Key label="1" @click="keypress('Digit1')" />
-            <Key label="2" @click="keypress('Digit2')" />
-            <Key label="3" @click="keypress('Digit3')" />
+            <Key label="1"
+                 @mousedown.prevent="keydown('Digit1')"
+                 @touchstart.prevent="keydown('Digit1')"
+                 @mouseup.prevent="keyup('Digit1')"
+                 @touchend.prevent="keyup('Digit1')"
+            />
+            <Key label="2"
+                 @mousedown.prevent="keydown('Digit2')"
+                 @touchstart.prevent="keydown('Digit2')"
+                 @mouseup.prevent="keyup('Digit2')"
+                 @touchend.prevent="keyup('Digit2')"
+            />
+            <Key label="3"
+                 @mousedown.prevent="keydown('Digit3')"
+                 @touchstart.prevent="keydown('Digit3')"
+                 @mouseup.prevent="keyup('Digit3')"
+                 @touchend.prevent="keyup('Digit3')"
+            />
           </div>
           <div class="line">
-            <Key label="0" @click="keypress('Digit0')" />
-            <Key label="Page<br />Up" @click="keypress('PageUp')" />
-            <Key label="Page<br />Down" @click="keypress('PageDown')" />
+            <Key label="0"
+                 @mousedown.prevent="keydown('Digit0')"
+                 @touchstart.prevent="keydown('Digit0')"
+                 @mouseup.prevent="keyup('Digit0')"
+                 @touchend.prevent="keyup('Digit0')"
+            />
+            <Key label="Page<br />Up"
+                 @mousedown.prevent="keydown('PageUp')"
+                 @touchstart.prevent="keydown('PageUp')"
+                 @mouseup.prevent="keyup('PageUp')"
+                 @touchend.prevent="keyup('PageUp')"
+            />
+            <Key label="Page<br />Down"
+                 @mousedown.prevent="keydown('PageDown')"
+                 @touchstart.prevent="keydown('PageDown')"
+                 @mouseup.prevent="keyup('PageDown')"
+                 @touchend.prevent="keyup('PageDown')"
+            />
           </div>
         </div>
         <div class="col">
           <div class="line">
-            <Key label="+" sublabel="R" description="Menu 1" @click="keypress('KeyR')" />
+            <Key label="+" sublabel="R" description="Menu 1"
+                 @mousedown.prevent="keydown('KeyR')"
+                 @touchstart.prevent="keydown('KeyR')"
+                 @mouseup.prevent="keyup('KeyR')"
+                 @touchend.prevent="keyup('KeyR')"
+            />
           </div>
           <div class="line">
-            <Key label="=" @click="keypress('NumpadEqual')" />
+            <Key label="="
+                 @mousedown.prevent="keydown('NumpadEqual')"
+                 @touchstart.prevent="keydown('NumpadEqual')"
+                 @mouseup.prevent="keyup('NumpadEqual')"
+                 @touchend.prevent="keyup('NumpadEqual')"
+            />
           </div>
           <div class="line">
-            <Key label="ESC" @click="keypress('Escape')" />
+            <Key label="ESC"
+                 @mousedown.prevent="keydown('Escape')"
+                 @touchstart.prevent="keydown('Escape')"
+                 @mouseup.prevent="keyup('Escape')"
+                 @touchend.prevent="keyup('Escape')"
+            />
           </div>
           <div class="line">
-            <Key class="key-row-2" label="Enter" @click="keypress('Enter')" />
+            <Key class="key-row-2" label="Enter"
+                 @mousedown.prevent="keydown('Enter')"
+                 @touchstart.prevent="keydown('Enter')"
+                 @mouseup.prevent="keyup('Enter')"
+                 @touchend.prevent="keyup('Enter')"
+            />
           </div>
         </div>
       </div>
