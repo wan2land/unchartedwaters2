@@ -1,9 +1,12 @@
 <template>
   <div class="key"
-       @mousedown.prevent="$emit('mousedown', $event)"
-       @touchstart.prevent="$emit('touchstart', $event)"
-       @mouseup.prevent="$emit('mouseup', $event)"
-       @touchend.prevent="$emit('touchend', $event)"
+       ref="key"
+       @mousedown.prevent="$emit('gamepad-keydown', $event)"
+       @mouseleave.prevent="$emit('gamepad-keyup', $event)"
+       @mouseup.prevent="$emit('gamepad-keyup', $event)"
+       @touchstart.prevent="$emit('gamepad-keydown', $event)"
+       @touchmove.prevent="touchleave($event)"
+       @touchend.prevent="$emit('gamepad-keyup', $event)"
   >
     <div class="label">
       <span v-html="label" />
@@ -30,5 +33,12 @@ export default Vue.extend({
       type: String,
     },
   },
+  methods: {
+    touchleave($event: TouchEvent) {
+      const keyElement = this.$refs.key as Element;
+      const touchedKeyElement = document.elementFromPoint($event.touches[0].clientX, $event.touches[0].clientY)
+      if (keyElement !== touchedKeyElement) this.$emit('gamepad-keyup', $event);
+    }
+  }
 })
 </script>
