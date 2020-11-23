@@ -84,43 +84,100 @@
       <div class="keyboard" v-if="enabledToggleKeyboard">
         <div class="col">
           <div class="line">
-            <Key label="/" sublabel="Q" description="Menu 4" @click="keypress('KeyQ')" />
-            <Key label="*" sublabel="W" description="Menu 3" @click="keypress('KeyW')" />
-            <Key label="-" sublabel="E" description="Menu 2" @click="keypress('KeyE')" />
+            <Key label="/" sublabel="Q" description="Menu 4"
+                 @gamepad-keydown="keydown('KeyQ')"
+                 @gamepad-keyup="keyup('KeyQ')"
+            />
+            <Key label="*" sublabel="W" description="Menu 3"
+                 @gamepad-keydown="keydown('KeyW')"
+                 @gamepad-keyup="keyup('KeyW')"
+            />
+            <Key label="-" sublabel="E" description="Menu 2"
+                 @gamepad-keydown="keydown('KeyE')"
+                 @gamepad-keyup="keyup('KeyE')"
+            />
           </div>
           <div class="line">
-            <Key label="7" @click="keypress('Digit7')" />
-            <Key label="8" @click="keypress('Digit8')" />
-            <Key label="9" @click="keypress('Digit9')" />
+            <Key label="7"
+                 @gamepad-keydown="keydown('Digit7')"
+                 @gamepad-keyup="keyup('Digit7')"
+            />
+            <Key label="8"
+                 @gamepad-keydown="keydown('Digit8')"
+                 @gamepad-keyup="keyup('Digit8')"
+            />
+            <Key label="9"
+                 @gamepad-keydown="keydown('Digit9')"
+                 @gamepad-keyup="keyup('Digit9')"
+            />
           </div>
           <div class="line">
-            <Key label="4" @click="keypress('Digit4')" />
-            <Key label="5" @click="keypress('Digit5')" />
-            <Key label="6" @click="keypress('Digit6')" />
+            <Key label="4"
+                 @gamepad-keydown="keydown('Digit4')"
+                 @gamepad-keyup="keyup('Digit4')"
+            />
+            <Key label="5"
+                 @gamepad-keydown="keydown('Digit5')"
+                 @gamepad-keyup="keyup('Digit5')"
+            />
+            <Key label="6"
+                 @gamepad-keydown="keydown('Digit6')"
+                 @gamepad-keyup="keyup('Digit6')"
+            />
           </div>
           <div class="line">
-            <Key label="1" @click="keypress('Digit1')" />
-            <Key label="2" @click="keypress('Digit2')" />
-            <Key label="3" @click="keypress('Digit3')" />
+            <Key label="1"
+                 @gamepad-keydown="keydown('Digit1')"
+                 @gamepad-keyup="keyup('Digit1')"
+            />
+            <Key label="2"
+                 @gamepad-keydown="keydown('Digit2')"
+                 @gamepad-keyup="keyup('Digit2')"
+            />
+            <Key label="3"
+                 @gamepad-keydown="keydown('Digit3')"
+                 @gamepad-keyup="keyup('Digit3')"
+            />
           </div>
           <div class="line">
-            <Key label="0" @click="keypress('Digit0')" />
-            <Key label="Page<br />Up" @click="keypress('PageUp')" />
-            <Key label="Page<br />Down" @click="keypress('PageDown')" />
+            <Key label="0"
+                 @gamepad-keydown="keydown('Digit0')"
+                 @gamepad-keyup="keyup('Digit0')"
+            />
+            <Key label="Page<br />Up"
+                 @gamepad-keydown="keydown('PageUp')"
+                 @gamepad-keyup="keyup('PageUp')"
+            />
+            <Key label="Page<br />Down"
+                 @gamepad-keydown="keydown('PageDown')"
+                 @gamepad-keyup="keyup('PageDown')"
+            />
           </div>
         </div>
         <div class="col">
           <div class="line">
-            <Key label="+" sublabel="R" description="Menu 1" @click="keypress('KeyR')" />
+            <Key label="+" sublabel="R" description="Menu 1"
+                 @gamepad-keydown="keydown('KeyR')"
+                 @gamepad-keyup="keyup('KeyR')"
+            />
           </div>
           <div class="line">
-            <Key label="=" @click="keypress('NumpadEqual')" />
+            <Key label="="
+                 @gamepad-keydown="keydown('NumpadEqual')"
+                 @gamepad-keyup="keyup('NumpadEqual')"
+            />
           </div>
           <div class="line">
-            <Key label="ESC" @click="keypress('Escape')" />
+            <Key label="ESC"
+                 @gamepad-keydown="keydown('Escape')"
+                 @gamepad-keyup="keyup('Escape')"
+            />
           </div>
           <div class="line">
-            <Key class="key-row-2" label="Enter" @click="keypress('Enter')" />
+            <Key class="key-row-2" label="Enter"
+                 @gamepad-keydown="keydown('Enter')"
+                 @gamepad-keyup="keyup('Enter')"
+            />
           </div>
         </div>
       </div>
