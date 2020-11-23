@@ -1,13 +1,14 @@
 <template>
-  <div class="key"
-       ref="key"
-       :class="{ active: activated }"
-       @mousedown.prevent="keydown($event)"
-       @mouseleave.prevent="keyup($event)"
-       @mouseup.prevent="keyup($event)"
-       @touchstart.prevent="keydown($event)"
-       @touchmove.prevent="touchleave($event)"
-       @touchend.prevent="keyup($event)"
+  <div
+    class="key"
+    ref="key"
+    :class="{ active: activated }"
+    @mousedown.prevent="keydown($event)"
+    @mouseleave.prevent="keyup($event)"
+    @mouseup.prevent="keyup($event)"
+    @touchstart.prevent="keydown($event)"
+    @touchmove.prevent="touchleave($event)"
+    @touchend.prevent="keyup($event)"
   >
     <div class="label">
       <span v-html="label" />
@@ -35,25 +36,18 @@ export default Vue.extend({
     },
   },
   data: () => ({
-      activated: false,
+    activated: false,
   }),
   methods: {
     touchleave($event: TouchEvent) {
-      const keyElement = this.$refs.key as Element;
+      const keyElement = this.$refs.key as Element
       const touchedKeyElement = document.elementFromPoint($event.touches[0].clientX, $event.touches[0].clientY)
-      if (keyElement !== touchedKeyElement) this.keyup($event);
-    },
-    keydown($event: Event) {
-      this.activated = true;
-      this.$emit('gamepad-keydown', $event);
+      if (keyElement !== touchedKeyElement) { this.keyup($event) }
     },
     keyup($event: Event) {
-      this.activated = false;
-      this.$emit('gamepad-keyup', $event);
-    }
-  }
+      this.activated = false
+      this.$emit('gamepad-keyup', $event)
+    },
+  },
 })
 </script>
-<style scoped>
-
-</style>

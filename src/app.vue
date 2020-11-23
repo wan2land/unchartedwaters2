@@ -34,7 +34,7 @@ import Vue from 'vue'
 
 import Game from './components/game.vue'
 
-const version = require('../package.json').version
+const version = require('../package.json').version // eslint-disable-line @typescript-eslint/no-require-imports
 
 export default Vue.extend({
   components: {

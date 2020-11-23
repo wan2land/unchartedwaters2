@@ -2,10 +2,10 @@
 import { DosFactory, DosRuntime } from 'js-dos'
 import { DosKeyEventConsumer } from 'js-dos/dist/typescript/js-dos-ci'
 
-require('js-dos')
+require('js-dos') // eslint-disable-line @typescript-eslint/no-require-imports
 
 const Dos = (window as any).Dos as DosFactory
-const DosController = (window as any).DosController as any
+const DosController = (window as any).DosController
 
 export function createDos(canvas: HTMLCanvasElement): Promise<DosRuntime> {
   return new Promise((resolve) => {

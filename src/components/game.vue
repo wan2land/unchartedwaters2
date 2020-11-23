@@ -51,7 +51,7 @@
           </svg>
         </a>
       </div>
-      <!-- 
+      <!--
       <a class="tool-item tool-mute-off icon">
         <svg version="1.1" viewBox="0 0 128 128">
           <path d="M64,88.613c6.77,0 12.563,-2.41 17.384,-7.228c4.819,-4.819 7.229,-10.616 7.229,-17.385l0,-39.384c0,-6.77 -2.408,-12.564 -7.229,-17.385c-4.821,-4.819 -10.614,-7.231 -17.384,-7.231c-6.77,0 -12.564,2.412 -17.385,7.231c-4.821,4.82 -7.231,10.615 -7.231,17.385l0,39.384c0,6.769 2.411,12.566 7.231,17.385c4.82,4.818 10.615,7.228 17.385,7.228Z" />
@@ -84,99 +84,127 @@
       <div class="keyboard" v-if="enabledToggleKeyboard">
         <div class="col">
           <div class="line">
-            <Key label="/" sublabel="Q" description="Menu 4"
-                 @gamepad-keydown="keydown('KeyQ')"
-                 @gamepad-keyup="keyup('KeyQ')"
+            <Key
+              label="/"
+              sublabel="Q"
+              description="Menu 4"
+              @gamepad-keydown="keydown('KeyQ')"
+              @gamepad-keyup="keyup('KeyQ')"
             />
-            <Key label="*" sublabel="W" description="Menu 3"
-                 @gamepad-keydown="keydown('KeyW')"
-                 @gamepad-keyup="keyup('KeyW')"
+            <Key
+              label="*"
+              sublabel="W"
+              description="Menu 3"
+              @gamepad-keydown="keydown('KeyW')"
+              @gamepad-keyup="keyup('KeyW')"
             />
-            <Key label="-" sublabel="E" description="Menu 2"
-                 @gamepad-keydown="keydown('KeyE')"
-                 @gamepad-keyup="keyup('KeyE')"
-            />
-          </div>
-          <div class="line">
-            <Key label="7"
-                 @gamepad-keydown="keydown('Digit7')"
-                 @gamepad-keyup="keyup('Digit7')"
-            />
-            <Key label="8"
-                 @gamepad-keydown="keydown('Digit8')"
-                 @gamepad-keyup="keyup('Digit8')"
-            />
-            <Key label="9"
-                 @gamepad-keydown="keydown('Digit9')"
-                 @gamepad-keyup="keyup('Digit9')"
+            <Key
+              label="-"
+              sublabel="E"
+              description="Menu 2"
+              @gamepad-keydown="keydown('KeyE')"
+              @gamepad-keyup="keyup('KeyE')"
             />
           </div>
           <div class="line">
-            <Key label="4"
-                 @gamepad-keydown="keydown('Digit4')"
-                 @gamepad-keyup="keyup('Digit4')"
+            <Key
+              label="7"
+              @gamepad-keydown="keydown('Digit7')"
+              @gamepad-keyup="keyup('Digit7')"
             />
-            <Key label="5"
-                 @gamepad-keydown="keydown('Digit5')"
-                 @gamepad-keyup="keyup('Digit5')"
+            <Key
+              label="8"
+              @gamepad-keydown="keydown('Digit8')"
+              @gamepad-keyup="keyup('Digit8')"
             />
-            <Key label="6"
-                 @gamepad-keydown="keydown('Digit6')"
-                 @gamepad-keyup="keyup('Digit6')"
-            />
-          </div>
-          <div class="line">
-            <Key label="1"
-                 @gamepad-keydown="keydown('Digit1')"
-                 @gamepad-keyup="keyup('Digit1')"
-            />
-            <Key label="2"
-                 @gamepad-keydown="keydown('Digit2')"
-                 @gamepad-keyup="keyup('Digit2')"
-            />
-            <Key label="3"
-                 @gamepad-keydown="keydown('Digit3')"
-                 @gamepad-keyup="keyup('Digit3')"
+            <Key
+              label="9"
+              @gamepad-keydown="keydown('Digit9')"
+              @gamepad-keyup="keyup('Digit9')"
             />
           </div>
           <div class="line">
-            <Key label="0"
-                 @gamepad-keydown="keydown('Digit0')"
-                 @gamepad-keyup="keyup('Digit0')"
+            <Key
+              label="4"
+              @gamepad-keydown="keydown('Digit4')"
+              @gamepad-keyup="keyup('Digit4')"
             />
-            <Key label="Page<br />Up"
-                 @gamepad-keydown="keydown('PageUp')"
-                 @gamepad-keyup="keyup('PageUp')"
+            <Key
+              label="5"
+              @gamepad-keydown="keydown('Digit5')"
+              @gamepad-keyup="keyup('Digit5')"
             />
-            <Key label="Page<br />Down"
-                 @gamepad-keydown="keydown('PageDown')"
-                 @gamepad-keyup="keyup('PageDown')"
+            <Key
+              label="6"
+              @gamepad-keydown="keydown('Digit6')"
+              @gamepad-keyup="keyup('Digit6')"
+            />
+          </div>
+          <div class="line">
+            <Key
+              label="1"
+              @gamepad-keydown="keydown('Digit1')"
+              @gamepad-keyup="keyup('Digit1')"
+            />
+            <Key
+              label="2"
+              @gamepad-keydown="keydown('Digit2')"
+              @gamepad-keyup="keyup('Digit2')"
+            />
+            <Key
+              label="3"
+              @gamepad-keydown="keydown('Digit3')"
+              @gamepad-keyup="keyup('Digit3')"
+            />
+          </div>
+          <div class="line">
+            <Key
+              label="0"
+              @gamepad-keydown="keydown('Digit0')"
+              @gamepad-keyup="keyup('Digit0')"
+            />
+            <Key
+              label="Page<br />Up"
+              @gamepad-keydown="keydown('PageUp')"
+              @gamepad-keyup="keyup('PageUp')"
+            />
+            <Key
+              label="Page<br />Down"
+              @gamepad-keydown="keydown('PageDown')"
+              @gamepad-keyup="keyup('PageDown')"
             />
           </div>
         </div>
         <div class="col">
           <div class="line">
-            <Key label="+" sublabel="R" description="Menu 1"
-                 @gamepad-keydown="keydown('KeyR')"
-                 @gamepad-keyup="keyup('KeyR')"
+            <Key
+              label="+"
+              sublabel="R"
+              description="Menu 1"
+              @gamepad-keydown="keydown('KeyR')"
+              @gamepad-keyup="keyup('KeyR')"
             />
           </div>
           <div class="line">
-            <Key label="="
-                 @gamepad-keydown="keydown('NumpadEqual')"
-                 @gamepad-keyup="keyup('NumpadEqual')"
+            <Key
+              label="="
+              @gamepad-keydown="keydown('NumpadEqual')"
+              @gamepad-keyup="keyup('NumpadEqual')"
             />
           </div>
           <div class="line">
-            <Key label="ESC"
-                 @gamepad-keydown="keydown('Escape')"
-                 @gamepad-keyup="keyup('Escape')"
+            <Key
+              label="ESC"
+              @gamepad-keydown="keydown('Escape')"
+              @gamepad-keyup="keyup('Escape')"
             />
           </div>
           <div class="line">
-            <Key class="key-row-2" label="Enter"
-                 @gamepad-keydown="keydown('Enter')"
-                 @gamepad-keyup="keyup('Enter')"
+            <Key
+              class="key-row-2"
+              label="Enter"
+              @gamepad-keydown="keydown('Enter')"
+              @gamepad-keyup="keyup('Enter')"
             />
           </div>
         </div>
@@ -190,15 +218,15 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import { create } from 'nipplejs'
 import fileDialog from 'file-dialog'
+import { create } from 'nipplejs'
+import Vue from 'vue'
 
-import Key from '../components/key.vue'
 import { createDos } from '../dos/create-dos'
-import { detectFileChange } from '../fs/detect-file-change'
-import { createIdbFileSystem, IdbFileSystem } from '../fs/create-idb-file-system'
 import { blockAddEventListener, restoreAddEventListener, getBlockedHandler, createKeyboardEvent, EventHandler } from '../event'
+import { createIdbFileSystem, IdbFileSystem } from '../fs/create-idb-file-system'
+import { detectFileChange } from '../fs/detect-file-change'
+import Key from './key.vue'
 
 
 const KEY_MAPS: Record<string, number> = {
@@ -260,13 +288,6 @@ const KEY_MAPS: Record<string, number> = {
   ArrowRightUp: 105,
 }
 
-const JOYSTICK_MAPS: Record<string, string> = {
-  up: 'ArrowUp',
-  down: 'ArrowDown',
-  left: 'ArrowLeft',
-  right: 'ArrowRight',
-}
-
 export default Vue.extend({
   components: {
     Key,
@@ -286,7 +307,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      $database: null as IdbFileSystem | null, 
+      $database: null as IdbFileSystem | null,
       width: 640,
       height: 480,
       enabledToggleFullscreen: false,
@@ -321,14 +342,14 @@ export default Vue.extend({
     } else {
       await fs.extract('/static/water2.zip')
     }
-    
+
     const saveFileBody = await db.load<Uint8Array>(this.save)
     if (saveFileBody) {
       // Overwrite Save File
-      ;(fs as any).fs.writeFile(this.save, saveFileBody)
+      (fs as any).fs.writeFile(this.save, saveFileBody)
     }
 
-    const ci = await main(['-c', this.entry])
+    await main(['-c', this.entry])
 
     this.keydownHandlers = getBlockedHandler(document, 'keydown')
     this.keyupHandlers = getBlockedHandler(document, 'keyup')
@@ -377,13 +398,12 @@ export default Vue.extend({
         triggerEventStream(currentJoystickCode)
       }
     })
-    joystick.on('end', (e, data) => {
+    joystick.on('end', () => {
       isRunningJoystick = false
       currentJoystickCode = null
     })
 
-    let messageSt: any = null
-    detectFileChange(fs, this.save, async () => {
+    detectFileChange(fs, this.save, () => {
       db.save(this.save, (fs as any).fs.readFile(this.save))
       this.toastMessage('세이브 파일이 브라우저에 저장되었습니다.', 1000)
       this.isClearExit = true
@@ -404,7 +424,6 @@ export default Vue.extend({
   methods: {
     onResize() {
       const { width: screenWidth, height: screenHeight } = (this.$refs.screen as HTMLElement).getBoundingClientRect()
-      console.log(screenWidth / 640, screenHeight/ 480)
       if (screenWidth / 640 > screenHeight / 480) {
         this.width = ~~(screenHeight * 640 / 480)
         this.height = screenHeight
@@ -421,7 +440,7 @@ export default Vue.extend({
         return
       }
       e.preventDefault()
-      return e.returnValue = '페이지를 벗어나면 저장하지 않은 내용이 날아갈 수 있습니다.'
+      return (e.returnValue = '페이지를 벗어나면 저장하지 않은 내용이 날아갈 수 있습니다.')
     },
     onKeydown(e: KeyboardEvent) {
       this.keydown(e.code)
@@ -453,7 +472,6 @@ export default Vue.extend({
       }
       const data = await this.$database.load<Uint8Array>(this.save)
       if (!data) {
-        console.log('!')
         return
       }
       const url = URL.createObjectURL(new Blob([data], {
@@ -463,7 +481,7 @@ export default Vue.extend({
       a.href = url
       a.download = this.save
       a.style.display = 'none'
-      document.body.appendChild(a)
+      document.body.append(a)
       a.click()
       this.$nextTick(() => a.remove())
     },

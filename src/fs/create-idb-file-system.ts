@@ -12,7 +12,7 @@ export async function createIdbFileSystem(name: string, version?: number): Promi
     }
     idb.onsuccess = function () { resolve(this.result) }
   })
-  
+
   return {
     save(key: string, data: any): Promise<void> {
       return new Promise<void>(resolve => {
@@ -27,7 +27,7 @@ export async function createIdbFileSystem(name: string, version?: number): Promi
         const request = db.transaction('files', 'readonly').objectStore('files').get(key)
         request.onsuccess = function (ev) {
           resolve((ev.target as any).result ?? null)
-        }  
+        }
       })
     },
   }

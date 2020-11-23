@@ -25,7 +25,7 @@ export function blockAddEventListener(target: HasAddEventListener, events: strin
       handlers[event].push(handler)
       return
     }
-    return originAddEventListener.apply(this, arguments as any)
+    return originAddEventListener.apply(this, arguments as any) // eslint-disable-line prefer-rest-params
   }
 }
 
