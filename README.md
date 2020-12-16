@@ -35,6 +35,6 @@
 
 **[게임 시작하기](http://unchartedwater2.wani.kr)**
 
-## 이슈보고하기
+## 문의하기
 
-게임 중 버그나 개선할 사항이 있다면 [이슈](https://github.com/wan2land/unchartedwater2/issues)에 작성해주세요. 시간 날 때 천천히 해결해놓겠습니다.
+게임 중 버그나 개선할 사항, 질문 등이 있다면 [이슈 페이지](https://github.com/wan2land/unchartedwater2/issues)에 작성해주세요. 시간 날 때 천천히 해결해놓겠습니다.
