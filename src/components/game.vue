@@ -88,90 +88,90 @@
               label="/"
               sublabel="Q"
               description="Menu 4"
-              @gamepad-keydown="keydown('KeyQ')"
-              @gamepad-keyup="keyup('KeyQ')"
+              @keydown="keydown('KeyQ')"
+              @keyup="keyup('KeyQ')"
             />
             <Key
               label="*"
               sublabel="W"
               description="Menu 3"
-              @gamepad-keydown="keydown('KeyW')"
-              @gamepad-keyup="keyup('KeyW')"
+              @keydown="keydown('KeyW')"
+              @keyup="keyup('KeyW')"
             />
             <Key
               label="-"
               sublabel="E"
               description="Menu 2"
-              @gamepad-keydown="keydown('KeyE')"
-              @gamepad-keyup="keyup('KeyE')"
+              @keydown="keydown('KeyE')"
+              @keyup="keyup('KeyE')"
             />
           </div>
           <div class="line">
             <Key
               label="7"
-              @gamepad-keydown="keydown('Digit7')"
-              @gamepad-keyup="keyup('Digit7')"
+              @keydown="keydown('Digit7')"
+              @keyup="keyup('Digit7')"
             />
             <Key
               label="8"
-              @gamepad-keydown="keydown('Digit8')"
-              @gamepad-keyup="keyup('Digit8')"
+              @keydown="keydown('Digit8')"
+              @keyup="keyup('Digit8')"
             />
             <Key
               label="9"
-              @gamepad-keydown="keydown('Digit9')"
-              @gamepad-keyup="keyup('Digit9')"
+              @keydown="keydown('Digit9')"
+              @keyup="keyup('Digit9')"
             />
           </div>
           <div class="line">
             <Key
               label="4"
-              @gamepad-keydown="keydown('Digit4')"
-              @gamepad-keyup="keyup('Digit4')"
+              @keydown="keydown('Digit4')"
+              @keyup="keyup('Digit4')"
             />
             <Key
               label="5"
-              @gamepad-keydown="keydown('Digit5')"
-              @gamepad-keyup="keyup('Digit5')"
+              @keydown="keydown('Digit5')"
+              @keyup="keyup('Digit5')"
             />
             <Key
               label="6"
-              @gamepad-keydown="keydown('Digit6')"
-              @gamepad-keyup="keyup('Digit6')"
+              @keydown="keydown('Digit6')"
+              @keyup="keyup('Digit6')"
             />
           </div>
           <div class="line">
             <Key
               label="1"
-              @gamepad-keydown="keydown('Digit1')"
-              @gamepad-keyup="keyup('Digit1')"
+              @keydown="keydown('Digit1')"
+              @keyup="keyup('Digit1')"
             />
             <Key
               label="2"
-              @gamepad-keydown="keydown('Digit2')"
-              @gamepad-keyup="keyup('Digit2')"
+              @keydown="keydown('Digit2')"
+              @keyup="keyup('Digit2')"
             />
             <Key
               label="3"
-              @gamepad-keydown="keydown('Digit3')"
-              @gamepad-keyup="keyup('Digit3')"
+              @keydown="keydown('Digit3')"
+              @keyup="keyup('Digit3')"
             />
           </div>
           <div class="line">
             <Key
               label="0"
-              @gamepad-keydown="keydown('Digit0')"
-              @gamepad-keyup="keyup('Digit0')"
+              @keydown="keydown('Digit0')"
+              @keyup="keyup('Digit0')"
             />
             <Key
               label="Page<br />Up"
-              @gamepad-keydown="keydown('PageUp')"
-              @gamepad-keyup="keyup('PageUp')"
+              @keydown="keydown('PageUp')"
+              @keyup="keyup('PageUp')"
             />
             <Key
               label="Page<br />Down"
-              @gamepad-keydown="keydown('PageDown')"
-              @gamepad-keyup="keyup('PageDown')"
+              @keydown="keydown('PageDown')"
+              @keyup="keyup('PageDown')"
             />
           </div>
         </div>
@@ -181,30 +181,30 @@
               label="+"
               sublabel="R"
               description="Menu 1"
-              @gamepad-keydown="keydown('KeyR')"
-              @gamepad-keyup="keyup('KeyR')"
+              @keydown="keydown('KeyR')"
+              @keyup="keyup('KeyR')"
             />
           </div>
           <div class="line">
             <Key
               label="="
-              @gamepad-keydown="keydown('NumpadEqual')"
-              @gamepad-keyup="keyup('NumpadEqual')"
+              @keydown="keydown('NumpadEqual')"
+              @keyup="keyup('NumpadEqual')"
             />
           </div>
           <div class="line">
             <Key
               label="ESC"
-              @gamepad-keydown="keydown('Escape')"
-              @gamepad-keyup="keyup('Escape')"
+              @keydown="keydown('Escape')"
+              @keyup="keyup('Escape')"
             />
           </div>
           <div class="line">
             <Key
               class="key-row-2"
               label="Enter"
-              @gamepad-keydown="keydown('Enter')"
-              @gamepad-keyup="keyup('Enter')"
+              @keydown="keydown('Enter')"
+              @keyup="keyup('Enter')"
             />
           </div>
         </div>

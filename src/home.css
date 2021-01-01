@@ -177,8 +177,7 @@ body {
       height: 44px;
       color: #fff;
       background: rgba(0, 0, 0, .375);
-      &.active,
-      &:active {
+      &.active {
         background: rgba(80, 80, 80, .375);
       }
     }
