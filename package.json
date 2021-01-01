@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "dropbox": "^8.2.0",
     "file-dialog": "0.0.8",
     "js-dos": "^6.22.59",
     "nipplejs": "^0.8.7",

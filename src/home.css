@@ -39,6 +39,19 @@ body {
   .menu {
     margin-top: 24px;
   }
+  .menu-item.menu-item-with-icon {
+    display: flex;
+    align-items: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    img {
+      height: 24px;
+    }
+    span {
+      margin-left: 8px;
+      display: block;
+    }
+  }
 }
 
 .menu {
