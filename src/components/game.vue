@@ -414,6 +414,9 @@ export default Vue.extend({
   },
   watch: {
     joystickCode(current, before) {
+      if (current === before) {
+        return
+      }
       if (before) {
         this.keyup(before)
       }
