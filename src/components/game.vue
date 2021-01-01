@@ -228,6 +228,16 @@ import { createIdbFileSystem, IdbFileSystem } from '../fs/create-idb-file-system
 import { detectFileChange } from '../fs/detect-file-change'
 import Key from './key.vue'
 
+const JOYSTICK_MAPS = [
+  'ArrowRightUp',
+  'ArrowUp',
+  'ArrowLeftUp',
+  'ArrowLeft',
+  'ArrowLeftDown',
+  'ArrowDown',
+  'ArrowRightDown',
+  'ArrowRight',
+]
 
 const KEY_MAPS: Record<string, number> = {
   // Original Keypad
@@ -317,6 +327,7 @@ export default Vue.extend({
       message: null as string | null,
       keydownHandlers: [] as EventHandler[],
       keyupHandlers: [] as EventHandler[],
+      joystickCode: null as string | null,
     }
   },
   async mounted() {
@@ -359,48 +370,15 @@ export default Vue.extend({
     document.addEventListener('keydown', this.onKeydown)
     document.addEventListener('keyup', this.onKeyup)
 
-    let currentJoystickCode: string | null = null
-    let isRunningJoystick = false
-    const triggerEventStream = (code: string) => {
-      this.keydown(code)
-      setTimeout(() => {
-        this.keyup(code)
-        setTimeout(() => {
-          if (isRunningJoystick && currentJoystickCode) {
-            triggerEventStream(currentJoystickCode)
-          }
-        }, 60)
-      }, 100)
-    }
     joystick.on('move', (e, data) => {
       if (data.force > 0.3) {
-        if (data.angle.degree >= 22.5 && data.angle.degree < 67.5) {
-          currentJoystickCode = 'ArrowRightUp'
-        } else if (data.angle.degree >= 67.5 && data.angle.degree < 112.5) {
-          currentJoystickCode = 'ArrowUp'
-        } else if (data.angle.degree >= 112.5 && data.angle.degree < 157.5) {
-          currentJoystickCode = 'ArrowLeftUp'
-        } else if (data.angle.degree >= 157.5 && data.angle.degree < 202.5) {
-          currentJoystickCode = 'ArrowLeft'
-        } else if (data.angle.degree >= 202.5 && data.angle.degree < 247.5) {
-          currentJoystickCode = 'ArrowLeftDown'
-        } else if (data.angle.degree >= 247.5 && data.angle.degree < 292.5) {
-          currentJoystickCode = 'ArrowDown'
-        } else if (data.angle.degree >= 292.5 && data.angle.degree < 337.5) {
-          currentJoystickCode = 'ArrowRightDown'
-        } else {
-          currentJoystickCode = 'ArrowRight'
-        }
-        if (isRunningJoystick) {
-          return
-        }
-        isRunningJoystick = true
-        triggerEventStream(currentJoystickCode)
+        this.joystickCode = JOYSTICK_MAPS[(Math.floor((data.angle.degree - 22.5) / 45) + 8) % 8]
+      } else {
+        this.joystickCode = null
       }
     })
     joystick.on('end', () => {
-      isRunningJoystick = false
-      currentJoystickCode = null
+      this.joystickCode = null
     })
 
     detectFileChange(fs, this.save, () => {
@@ -420,6 +398,16 @@ export default Vue.extend({
     document.removeEventListener('fullscreenchange', this.onFullScreenChange)
     window.removeEventListener('beforeunload', this.onBeforeUnload)
     window.removeEventListener('resize', this.onResize)
+  },
+  watch: {
+    joystickCode(current, before) {
+      if (before) {
+        this.keyup(before)
+      }
+      if (current) {
+        this.keydown(current)
+      }
+    },
   },
   methods: {
     onResize() {
