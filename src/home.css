@@ -132,6 +132,9 @@ body {
       fill: #fff;
     }
   }
+  .tool-item:active {
+    background: #333333;
+  }
   .tool-item.disabled {
     svg {
       fill: #777;
