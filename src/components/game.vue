@@ -515,6 +515,16 @@ export default Vue.extend({
       }
       const dbx = this.dbx as Dropbox
       try {
+        await dbx.filesGetMetadata({
+          path: `/${this.mod}/${this.save}`,
+        })
+        if (!confirm('세이브 파일을 드롭박스에 저정합니다.\n이미 저장된 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?')) {
+          return
+        }
+      } catch (e) {
+        // safe
+      }
+      try {
         await dbx.filesUpload({
           path: `/${this.mod}/${this.save}`,
           contents: data,
@@ -538,6 +548,9 @@ export default Vue.extend({
         const response = await dbx.filesDownload({
           path: `/${this.mod}/${this.save}`,
         })
+        if (!confirm('세이브 파일을 드롭박스에서 불러옵니다.\n현재 컴퓨터에서 진행중인 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?')) {
+          return
+        }
         const fileBlob = (response.result as any).fileBlob as Blob
         const data = new Uint8Array(await fileBlob.arrayBuffer())
         this.$database.save(this.save, data)
