@@ -1,5 +1,5 @@
 <template>
-  <div class="view" @touchstart.stop>
+  <div class="view">
     <template v-if="isSplash">
       <div class="splash">
         <div class="logo">

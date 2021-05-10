@@ -93,7 +93,7 @@
       <!-- <div class="dosbox-container">
         <div class="canvas"></div>
       </div> -->
-      <div class="event-blocker joystick" ref="mobileController"></div>
+      <div class="event-blocker joystick" ref="mobileController" @touchstart.stop.prevent @touchend.stop.prevent @touchmove.stop.prevent></div>
       <div class="keyboard" v-if="enabledToggleKeyboard">
         <div class="col">
           <div class="line">
