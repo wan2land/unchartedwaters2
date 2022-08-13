@@ -528,6 +528,7 @@ export default Vue.extend({
         await dbx.filesUpload({
           path: `/${this.mod}/${this.save}`,
           contents: data,
+          mode: { '.tag': 'overwrite' },
         })
         this.toastMessage('세이브 파일이 드롭박스에 저장되었습니다.')
       } catch (e) {
