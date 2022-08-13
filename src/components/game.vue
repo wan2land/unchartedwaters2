@@ -98,6 +98,15 @@
         <div class="col">
           <div class="line">
             <Key
+              label="ESC"
+              @keydown="keydown('Escape')"
+              @keyup="keyup('Escape')"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="line">
+            <Key
               label="/"
               sublabel="Q"
               description="Menu 4"
@@ -207,14 +216,7 @@
           </div>
           <div class="line">
             <Key
-              label="ESC"
-              @keydown="keydown('Escape')"
-              @keyup="keyup('Escape')"
-            />
-          </div>
-          <div class="line">
-            <Key
-              class="key-row-2"
+              class="key-row-3"
               label="Enter"
               @keydown="keydown('Enter')"
               @keyup="keyup('Enter')"
