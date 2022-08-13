@@ -4,6 +4,8 @@
   <img src="./screenshot.png" alt="Uncharted Water Play" width="600" />
 </p>
 
+> [대항해시대 오리진](https://uwo.floor.line.games/kr/main) 2022년 8월 23일 정식 출시!
+
 ## 소개
 
 대항해시대 오리진의 소식을 듣고 복습겸 대항해시대2를 플레이하려고 했습니다. 시간이 많이 흘러, 컴퓨터 환경이 많이 변하였습니다.
@@ -11,7 +13,7 @@
 
 저 같은 사람이 분명히 많을 거 같아 대항해시대2(한글판)를 웹에서 할 수 있도록 작업하였습니다.
 
-하루 빨리 [대항해시대 오리진](https://namu.wiki/w/%EB%8C%80%ED%95%AD%ED%95%B4%EC%8B%9C%EB%8C%80%20%EC%98%A4%EB%A6%AC%EC%A7%84)이 나오길 기원하며..
+~~하루 빨리 [대항해시대 오리진](https://namu.wiki/w/%EB%8C%80%ED%95%AD%ED%95%B4%EC%8B%9C%EB%8C%80%20%EC%98%A4%EB%A6%AC%EC%A7%84)이 나오길 기원하며..~~
 
 ## 사용법
 
