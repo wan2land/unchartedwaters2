@@ -1,21 +1,24 @@
+import type { DosRuntime } from "js-dos";
+import type { DosKeyEventConsumer } from "js-dos/dist/typescript/js-dos-ci";
+import { once, load } from "nano-loader";
 
-import { DosFactory, DosRuntime } from 'js-dos'
-import { DosKeyEventConsumer } from 'js-dos/dist/typescript/js-dos-ci'
+const loadJsDos = once(() => load("/static/js-dos/js-dos.js"));
 
-require('js-dos') // eslint-disable-line @typescript-eslint/no-require-imports
+export async function createDos(
+  canvas: HTMLCanvasElement
+): Promise<DosRuntime> {
+  await loadJsDos();
 
-const Dos = (window as any).Dos as DosFactory
-const DosController = (window as any).DosController
-
-export function createDos(canvas: HTMLCanvasElement): Promise<DosRuntime> {
-  return new Promise((resolve) => {
-    Dos(canvas, {
-      wdosboxUrl: '/static/wdosbox.js',
-      cycles: 10000,
-    }).ready((fs, main) => resolve({ fs, main }))
-  })
+  return await new Promise((resolve) => {
+    window
+      .Dos(canvas, {
+        wdosboxUrl: "/static/js-dos/wdosbox.js",
+        cycles: 10000,
+      })
+      .ready((fs, main) => resolve({ fs, main }));
+  });
 }
 
 export function applyMove(elem: HTMLDivElement, consumer: DosKeyEventConsumer) {
-  DosController.Move(elem, consumer)
+  window.DosController.Move(elem, consumer);
 }

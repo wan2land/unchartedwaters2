@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
 }
@@ -9,7 +10,7 @@ body {
   margin: 0;
   background: #000;
   overflow: hidden;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .view {
@@ -57,15 +58,16 @@ body {
 .menu {
   position: relative;
   box-sizing: border-box;
-  box-shadow: inset 0 0 0 2px #000,
-    inset 0 0 0 4px #D34100,
-    inset 0 0 0 6px #F3A261,
+  box-shadow:
+    inset 0 0 0 2px #000,
+    inset 0 0 0 4px #d34100,
+    inset 0 0 0 6px #f3a261,
     inset 0 0 0 8px #000000,
-    inset 0 0 0 10px #D34100,
-    inset 0 0 0 12px #00A261,
-    inset 0 0 0 14px #D34100,
-    inset 0 0 0 16px #F3E3D3;
-  background: #F3E3D3;
+    inset 0 0 0 10px #d34100,
+    inset 0 0 0 12px #00a261,
+    inset 0 0 0 14px #d34100,
+    inset 0 0 0 16px #f3e3d3;
+  background: #f3e3d3;
   padding: 24px;
   .corner {
     position: absolute;
@@ -102,7 +104,7 @@ body {
   }
   .menu-item:hover {
     background: #000;
-    color: #F3E3D3
+    color: #f3e3d3;
   }
 }
 
@@ -164,7 +166,7 @@ body {
     height: var(--screen-height);
     background: #333;
     height: 0;
-    padding-top: 66.66666%
+    padding-top: 66.66666%;
   }
   .canvas-container,
   .event-blocker {
@@ -192,9 +194,9 @@ body {
       width: 44px;
       height: 44px;
       color: #fff;
-      background: rgba(0, 0, 0, .375);
+      background: rgba(0, 0, 0, 0.375);
       &.active {
-        background: rgba(80, 80, 80, .375);
+        background: rgba(80, 80, 80, 0.375);
       }
     }
     .label {
@@ -204,7 +206,7 @@ body {
       font-size: 12px;
       .or {
         font-size: 75%;
-        color: rgba(255, 255, 255, .375);
+        color: rgba(255, 255, 255, 0.375);
       }
     }
     .description {
@@ -215,7 +217,7 @@ body {
       bottom: 6px;
       left: 6px;
       font-size: 10px;
-      color: rgba(255, 255, 255, .625);
+      color: rgba(255, 255, 255, 0.625);
     }
     .key-row-2 {
       height: 92px;
@@ -232,23 +234,20 @@ body {
   }
 }
 
-
-
 .message {
   position: absolute;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px;
-  background: rgba(255, 255, 255, .75);
+  background: rgba(255, 255, 255, 0.75);
   pointer-events: none;
+  transition: opacity 0.5s;
+  opacity: 0;
 }
 
-.fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-leave-to {
-  opacity: 0;
+.message.active {
+  opacity: 1;
 }
 
 .version {
