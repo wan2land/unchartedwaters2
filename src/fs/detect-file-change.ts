@@ -1,9 +1,7 @@
-import { DosFS } from "js-dos/dist/typescript/js-dos-fs";
-
 import { debounce } from "../utils/timing";
 
 export function detectFileChange(
-  fs: DosFS,
+  fs: any, // eslint-disable-line @typescript-eslint/no-explicit-any
   path: string,
   handler: () => unknown
 ) {
