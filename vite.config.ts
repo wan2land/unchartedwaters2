@@ -9,7 +9,7 @@ export default defineConfig({
       targets: [
         {
           src: "CNAME",
-          dest: "CNAME",
+          dest: "",
         },
         {
           src: "static/*",
