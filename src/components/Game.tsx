@@ -1,20 +1,20 @@
-import { useEffect, useState, useRef, useCallback } from "preact/hooks";
 import { Dropbox } from "dropbox";
 import fileDialog from "file-dialog";
 import { saveAs } from "file-saver";
 import nipple from "nipplejs";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
 import { createDos } from "../dos/create-dos";
 import {
-  blockAddEventListener,
-  restoreAddEventListener,
-  getBlockedHandler,
-  createKeyboardEvent,
   EventHandler,
+  blockAddEventListener,
+  createKeyboardEvent,
+  getBlockedHandler,
+  restoreAddEventListener,
 } from "../event";
 import {
-  createIdbFileSystem,
   IdbFileSystem,
+  createIdbFileSystem,
 } from "../fs/create-idb-file-system";
 import { detectFileChange } from "../fs/detect-file-change";
 import { VirtualKeyboard } from "./VirtualKeyboard.tsx";
@@ -41,7 +41,14 @@ const KEY_ALIAS: Record<string, number> = {
   ArrowRightDown: 99,
   ArrowLeftUp: 103,
   ArrowRightUp: 105,
+
+  Enter: 13, // NumpadEnter
+  ArrowLeft: 100, // Numpad4
+  ArrowUp: 104, // Numpad8
+  ArrowRight: 102, // Numpad6
+  ArrowDown: 98, // Numpad2
 };
+
 export interface GameProps {
   mod?: string; // water2
   entry?: string;
@@ -149,7 +156,52 @@ export function Game({
       handleKeyDown(joystickCode);
     }
     joystickCodeBefore.current = joystickCode;
-  }, [joystickCode]);
+  }, [joystickCode, joystickCodeBefore, handleKeyDown, handleKeyUp]);
+
+  const start = useCallback(async () => {
+    const joystick = nipple.create({
+      zone: mobileController.current!,
+    });
+    blockAddEventListener(document, ["keydown", "keyup", "keypress"]);
+    const db = (database.current = await createIdbFileSystem(mod, 1));
+    const { fs, main } = await createDos(canvas.current!);
+    await fs.extract(`/static/game/${mod}.zip`);
+    const saveFileBody = await db.load(saveFile);
+    if (saveFileBody) {
+      // Overwrite Save File
+      (fs as any).fs.writeFile(saveFile, saveFileBody); // eslint-disable-line @typescript-eslint/no-explicit-any
+    }
+    await main(["-c", entry]);
+    keydownHandlers.current = getBlockedHandler(document, "keydown");
+    keyupHandlers.current = getBlockedHandler(document, "keyup");
+    restoreAddEventListener(document);
+
+    document.addEventListener("keydown", handleDocumentKeyDown);
+    document.addEventListener("keyup", handleDocumentKeyUp);
+
+    joystick.on("move", (_, data) => {
+      if (data.force > 0.3) {
+        setJoystickCode(
+          JOYSTICK_MAPS[(Math.floor((data.angle.degree - 22.5) / 45) + 8) % 8]
+        );
+      } else {
+        setJoystickCode(null);
+      }
+    });
+
+    joystick.on("end", () => {
+      setJoystickCode(null);
+    });
+
+    detectFileChange(fs, saveFile, () => {
+      db.save(saveFile, (fs as any).fs.readFile(saveFile)); // eslint-disable-line @typescript-eslint/no-explicit-any
+      setToastMessage("세이브 파일이 브라우저에 저장되었습니다.");
+      isClearExit.current = true;
+      setTimeout(() => {
+        isClearExit.current = false;
+      }, 5000);
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     handleResize();
@@ -168,52 +220,14 @@ export function Game({
       window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("resize", handleResize);
     };
-  }, [handleResize]);
-
-  const start = useCallback(async () => {
-    const joystick = nipple.create({
-      zone: mobileController.current!,
-    });
-    blockAddEventListener(document, ["keydown", "keyup", "keypress"]);
-    const db = (database.current = await createIdbFileSystem(mod, 1));
-    const { fs, main } = await createDos(canvas.current!);
-    await fs.extract(`/static/game/${mod}.zip`);
-    const saveFileBody = await db.load<Uint8Array>(saveFile);
-    if (saveFileBody) {
-      // Overwrite Save File
-      (fs as any).fs.writeFile(saveFile, saveFileBody);
-    }
-    await main(["-c", entry]);
-    keydownHandlers.current = getBlockedHandler(document, "keydown");
-    keyupHandlers.current = getBlockedHandler(document, "keyup");
-    restoreAddEventListener(document);
-
-    document.addEventListener("keydown", handleDocumentKeyDown);
-    document.addEventListener("keyup", handleDocumentKeyUp);
-
-    joystick.on("move", (e, data) => {
-      if (data.force > 0.3) {
-        setJoystickCode(
-          JOYSTICK_MAPS[(Math.floor((data.angle.degree - 22.5) / 45) + 8) % 8]
-        );
-      } else {
-        setJoystickCode(null);
-      }
-    });
-
-    joystick.on("end", () => {
-      setJoystickCode(null);
-    });
-
-    detectFileChange(fs, saveFile, () => {
-      db.save(saveFile, (fs as any).fs.readFile(saveFile));
-      setToastMessage("세이브 파일이 브라우저에 저장되었습니다.");
-      isClearExit.current = true;
-      setTimeout(() => {
-        isClearExit.current = false;
-      }, 5000);
-    });
-  }, []);
+  }, [
+    handleResize,
+    handleBeforeUnload,
+    handleFullScreenChange,
+    handleDocumentKeyDown,
+    handleDocumentKeyUp,
+    start,
+  ]);
 
   const toggleFullscreen = useCallback(() => {
     const doc = window.document;
@@ -223,11 +237,12 @@ export function Game({
       doc.exitFullscreen();
     }
   }, []);
+
   const downloadSaveFile = useCallback(async () => {
     if (!database.current) {
       return;
     }
-    const data = await database.current.load<Uint8Array>(saveFile);
+    const data = await database.current.load(saveFile);
     if (!data) {
       setToastMessage("🚫 세이브 파일을 찾을 수 없습니다.");
       return;
@@ -239,7 +254,8 @@ export function Game({
       })
     );
     saveAs(url, saveFile);
-  }, []);
+  }, [saveFile]);
+
   const uploadSaveFile = useCallback(async () => {
     if (!database.current) {
       return;
@@ -255,7 +271,7 @@ export function Game({
     setToastMessage(
       "세이브 파일이 브라우저에 저장되었습니다.\n새로고침 후 파일을 불러 올 수 있습니다."
     );
-  }, []);
+  }, [saveFile]);
 
   const syncSaveFileToDropbox = useCallback(async () => {
     if (!dbx) {
@@ -265,7 +281,7 @@ export function Game({
     if (!database.current) {
       return;
     }
-    const data = await database.current.load<Uint8Array>(saveFile);
+    const data = await database.current.load(saveFile);
     if (!data) {
       return;
     }
@@ -315,9 +331,11 @@ export function Game({
       ) {
         return;
       }
-      const fileBlob = (response.result as any).fileBlob as Blob;
-      const data = new Uint8Array(await fileBlob.arrayBuffer());
-      database.current.save(saveFile, data);
+      const fileBlob = (response.result as any).fileBlob as Blob; // eslint-disable-line @typescript-eslint/no-explicit-any
+      database.current.save(
+        saveFile,
+        new Uint8Array(await fileBlob.arrayBuffer())
+      );
       setToastMessage(
         "세이브 파일을 드롭박스에서 성공적으로 불러왔습니다.<br />새로고침 후 파일을 불러 올 수 있습니다."
       );
@@ -338,10 +356,11 @@ export function Game({
 
   return (
     <div class="game">
-      <div class="tools">
-        <div class="top">
-          <a
-            class="tool-item tool-fullscreen icon"
+      <div class="game__tools">
+        <div class="game__tools__group-start">
+          <button
+            type="button"
+            class="game__tools__item"
             title="전체화면"
             onClick={toggleFullscreen}
           >
@@ -368,52 +387,56 @@ export function Game({
                 />
               </svg>
             )}
-          </a>
-          <a
-            class="tool-item tool-save icon"
+          </button>
+          <button
+            type="button"
+            class="game__tools__item"
             title="세이브 파일 저장하기"
             onClick={downloadSaveFile}
           >
             <svg version="1.1" viewBox="0 0 128 128">
               <path d="M126.333,35.332c-1.111,-2.665 -2.445,-4.777 -4.001,-6.332l-23.333,-23.334c-1.555,-1.554 -3.666,-2.888 -6.333,-4c-2.665,-1.111 -5.11,-1.666 -7.332,-1.666l-77.334,0c-2.221,0 -4.111,0.777 -5.666,2.333c-1.556,1.555 -2.333,3.444 -2.333,5.667l0,112c0,2.224 0.777,4.113 2.333,5.668c1.555,1.554 3.445,2.332 5.666,2.332l112.001,0c2.223,0 4.112,-0.778 5.667,-2.332c1.554,-1.555 2.331,-3.444 2.331,-5.668l0,-77.333c0,-2.223 -0.555,-4.667 -1.666,-7.335Zm-72.999,-22c0,-0.722 0.264,-1.346 0.792,-1.874c0.528,-0.527 1.153,-0.791 1.875,-0.791l16.001,0c0.72,0 1.345,0.263 1.873,0.791c0.529,0.528 0.793,1.152 0.793,1.874l0,26.667c0,0.724 -0.266,1.348 -0.793,1.876c-0.528,0.526 -1.153,0.791 -1.873,0.791l-16.001,0c-0.722,0 -1.348,-0.264 -1.875,-0.791c-0.528,-0.529 -0.792,-1.152 -0.792,-1.876l0,-26.667Zm42.668,104.002l-64.002,0l0,-32.001l64.002,0l0,32.001Zm21.334,0l-10.67,0l0,-34.668c0,-2.223 -0.778,-4.111 -2.333,-5.667c-1.555,-1.555 -3.444,-2.333 -5.665,-2.333l-69.334,0c-2.223,0 -4.112,0.778 -5.668,2.333c-1.555,1.555 -2.333,3.444 -2.333,5.667l0,34.668l-10.666,0l0,-106.668l10.666,0l0,34.667c0,2.223 0.777,4.111 2.333,5.667c1.556,1.555 3.445,2.333 5.667,2.333l48.002,0c2.221,0 4.112,-0.778 5.666,-2.333c1.554,-1.555 2.333,-3.444 2.333,-5.667l0,-34.667c0.833,0 1.915,0.277 3.25,0.833c1.335,0.555 2.279,1.11 2.834,1.666l23.418,23.417c0.556,0.556 1.111,1.515 1.666,2.876c0.558,1.361 0.834,2.431 0.834,3.209l0,74.667Z" />
             </svg>
-          </a>
-          <a
-            class="tool-item tool-load icon"
+          </button>
+          <button
+            type="button"
+            class="game__tools__item"
             title="세이브 파일 불러오기"
             onClick={uploadSaveFile}
           >
             <svg version="1.1" viewBox="0 0 128 128">
               <path d="M126.994,66.077c-0.982,-2.056 -2.482,-3.632 -4.491,-4.726c-2.012,-1.095 -4.224,-1.642 -6.638,-1.642l-12.874,0l0,-10.729c0,-4.112 -1.476,-7.644 -4.426,-10.594c-2.951,-2.951 -6.482,-4.425 -10.594,-4.425l-36.476,0l0,-2.146c0,-4.112 -1.475,-7.644 -4.425,-10.593c-2.95,-2.951 -6.482,-4.426 -10.594,-4.426l-21.457,0c-4.112,0 -7.644,1.475 -10.594,4.426c-2.95,2.949 -4.425,6.481 -4.425,10.593l0,64.37c0,4.112 1.475,7.643 4.425,10.593c2.95,2.951 6.482,4.426 10.594,4.426l72.954,0c2.993,0 6.122,-0.771 9.387,-2.314c3.263,-1.541 5.854,-3.498 7.776,-5.867l19.781,-24.339c2.056,-2.592 3.083,-5.273 3.083,-8.046c0.001,-1.61 -0.334,-3.128 -1.006,-4.561Zm-118.411,-34.261c0,-1.787 0.625,-3.307 1.877,-4.559c1.251,-1.251 2.771,-1.877 4.56,-1.877l21.457,0c1.788,0 3.307,0.625 4.559,1.877c1.251,1.252 1.877,2.772 1.877,4.559l0,4.292c0,1.788 0.627,3.308 1.878,4.559c1.251,1.251 2.771,1.878 4.559,1.878l38.621,0c1.788,0 3.309,0.626 4.561,1.877c1.25,1.251 1.876,2.771 1.876,4.559l0,10.729l-51.495,0c-3.039,0 -6.169,0.771 -9.388,2.313c-3.218,1.542 -5.811,3.498 -7.778,5.868l-17.164,21.12l0,-57.195Zm109.628,41.438l-19.713,24.339c-1.116,1.386 -2.704,2.57 -4.761,3.552c-2.056,0.984 -3.978,1.476 -5.766,1.476l-72.952,0c-2.369,0 -3.553,-0.783 -3.553,-2.347c0,-0.715 0.402,-1.609 1.207,-2.683l19.713,-24.339c1.162,-1.386 2.759,-2.559 4.794,-3.52c2.033,-0.961 3.944,-1.442 5.733,-1.442l72.952,0c2.369,0 3.553,0.783 3.553,2.347c0,0.762 -0.401,1.633 -1.207,2.617Z" />
             </svg>
-          </a>
+          </button>
           {dbx && (
             <>
-              <a
-                class="tool-item tool-save icon"
+              <button
+                type="button"
+                class="game__tools__item"
                 title="세이브 드롭박스에 저장하기"
                 onClick={syncSaveFileToDropbox}
               >
                 <svg version="1.1" viewBox="0 0 128 128">
                   <path d="M122.431,69.432c-3.712,-4.644 -8.455,-7.654 -14.234,-9.033c1.824,-2.755 2.733,-5.822 2.733,-9.199c0,-4.712 -1.667,-8.734 -4.999,-12.067c-3.333,-3.333 -7.355,-5 -12.066,-5c-4.223,0 -7.911,1.378 -11.066,4.134c-2.621,-6.4 -6.811,-11.533 -12.566,-15.399c-5.755,-3.868 -12.1,-5.801 -19.034,-5.801c-9.422,0 -17.466,3.334 -24.133,10.001c-6.667,6.665 -10,14.71 -10,24.132c0,0.578 0.045,1.534 0.133,2.867c-5.244,2.444 -9.421,6.111 -12.533,10.999c-3.111,4.89 -4.666,10.222 -4.666,16.001c0,8.222 2.923,15.254 8.767,21.099c5.844,5.846 12.877,8.767 21.099,8.767l72.534,0c7.066,0 13.099,-2.501 18.099,-7.5c5,-4.999 7.501,-11.032 7.501,-18.1c-0.001,-5.956 -1.857,-11.255 -5.569,-15.901Zm-37.733,-1.799c-0.424,0.422 -0.922,0.632 -1.499,0.632l-14.933,0l0,23.468c0,0.577 -0.211,1.077 -0.633,1.499c-0.424,0.423 -0.923,0.633 -1.499,0.633l-12.802,0c-0.578,0 -1.078,-0.21 -1.5,-0.633c-0.421,-0.422 -0.633,-0.922 -0.633,-1.499l0,-23.468l-14.934,0c-0.621,0 -1.133,-0.199 -1.532,-0.598c-0.4,-0.4 -0.6,-0.912 -0.6,-1.533c0,-0.534 0.222,-1.068 0.666,-1.601l23.4,-23.399c0.4,-0.4 0.911,-0.6 1.533,-0.6c0.623,0 1.134,0.2 1.534,0.6l23.466,23.466c0.401,0.399 0.599,0.911 0.599,1.534c-0.001,0.576 -0.211,1.078 -0.633,1.499Z" />
                 </svg>
-              </a>
-              <a
-                class="tool-item tool-load icon"
+              </button>
+              <button
+                type="button"
+                class="game__tools__item"
                 title="세이브 드롭박스에서 불러오기"
                 onClick={syncSaveFileFromDropbox}
               >
                 <svg version="1.1" viewBox="0 0 128 128">
                   <path d="M122.431,69.432c-3.712,-4.644 -8.455,-7.654 -14.234,-9.033c1.824,-2.755 2.733,-5.822 2.733,-9.199c0,-4.712 -1.667,-8.734 -4.999,-12.067c-3.333,-3.333 -7.355,-5 -12.066,-5c-4.223,0 -7.911,1.378 -11.066,4.134c-2.621,-6.4 -6.811,-11.533 -12.566,-15.399c-5.755,-3.868 -12.1,-5.801 -19.034,-5.801c-9.422,0 -17.466,3.334 -24.133,10.001c-6.667,6.665 -10,14.71 -10,24.132c0,0.578 0.045,1.534 0.133,2.867c-5.244,2.444 -9.421,6.111 -12.533,10.999c-3.111,4.89 -4.666,10.222 -4.666,16.001c0,8.222 2.923,15.254 8.767,21.099c5.844,5.846 12.877,8.767 21.099,8.767l72.534,0c7.066,0 13.099,-2.501 18.099,-7.5c5,-4.999 7.501,-11.032 7.501,-18.1c-0.001,-5.956 -1.857,-11.255 -5.569,-15.901Zm-37.764,2.567l-23.401,23.402c-0.399,0.398 -0.911,0.599 -1.533,0.599c-0.622,0 -1.134,-0.201 -1.534,-0.599l-23.466,-23.468c-0.4,-0.399 -0.599,-0.911 -0.599,-1.533c0,-0.578 0.21,-1.078 0.632,-1.5c0.423,-0.422 0.922,-0.633 1.5,-0.633l14.933,0l0,-23.466c0,-0.578 0.212,-1.078 0.633,-1.501c0.423,-0.421 0.923,-0.632 1.5,-0.632l12.802,0c0.578,0 1.076,0.21 1.5,0.632c0.421,0.423 0.632,0.923 0.632,1.501l0,23.466l14.934,0c0.622,0 1.133,0.2 1.532,0.599c0.4,0.4 0.598,0.911 0.598,1.534c0,0.535 -0.22,1.066 -0.663,1.599Z" />
                 </svg>
-              </a>
+              </button>
             </>
           )}
         </div>
-        <div class="bottom">
-          <a
-            class="tool-item tool-keyboard icon"
-            // :class="{ disabled: !enabledToggleKeyboard }"
+        <div class="game__tools__group-end">
+          <button
+            type="button"
+            class={`game__tools__item ${enabledToggleKeyboard ? "" : "game__tools__item--disabled"}`}
             onClick={toggleKeyboard}
           >
             <svg version="1.1" viewBox="0 0 128 128">
@@ -432,34 +455,35 @@ export function Game({
               <path d="M86.4,51.199l6.399,0c0.711,0 1.067,-0.356 1.067,-1.067l0,-6.399c0,-0.711 -0.356,-1.066 -1.067,-1.067l-6.399,0c-0.711,0 -1.068,0.356 -1.068,1.067l0,6.399c0,0.711 0.357,1.067 1.068,1.067Z" />
               <path d="M93.866,67.199c0,0.711 0.355,1.068 1.066,1.068l14.933,0c0.712,0 1.068,-0.357 1.068,-1.068l0,-23.466c0,-0.711 -0.355,-1.066 -1.068,-1.067l-6.399,0c-0.711,0 -1.067,0.356 -1.067,1.067l0,16l-7.467,0c-0.711,0 -1.066,0.355 -1.066,1.066l0,6.4l0,0Z" />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
 
       <div
-        class="screen"
+        class="game__screen"
         style={{
           "--screen-width": `${width}px`,
           "--screen-height": `${height}px`,
         }}
         ref={screen}
       >
-        <div class="canvas-container">
-          <canvas ref={canvas}></canvas>
+        <div class="game__canvas">
+          <canvas ref={canvas} />
         </div>
+
         <div
-          class="event-blocker joystick"
+          class="game__event-blocker"
           ref={mobileController}
           onTouchStart={ignoreStopAndPrevent}
           onTouchEnd={ignoreStopAndPrevent}
           onTouchMove={ignoreStopAndPrevent}
-        ></div>
+        />
         {enabledToggleKeyboard && (
           <VirtualKeyboard onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} />
         )}
       </div>
 
-      <div class={`message ${toastMessage ? "active" : ""}`}>
+      <div class={`toast ${toastMessage ? "toast--active" : ""}`}>
         {innerToastMessage}
       </div>
     </div>

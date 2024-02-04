@@ -1,21 +1,25 @@
-import { DosFS } from 'js-dos/dist/typescript/js-dos-fs'
+import { DosFS } from "js-dos/dist/typescript/js-dos-fs";
 
-import { debounce } from '../utils'
+import { debounce } from "../utils/timing";
 
-export function detectFileChange(fs: DosFS, path: string, handler: () => any) {
-  let lastModified = null as number | null
-  const debouncedHandler = debounce(handler, 350)
+export function detectFileChange(
+  fs: DosFS,
+  path: string,
+  handler: () => unknown
+) {
+  let lastModified = null as number | null;
+  const debouncedHandler = debounce(handler, 350);
   setInterval(() => {
     try {
-      const modified = (fs as any).fs.stat(path).mtime.getTime() as number
+      const modified = (fs as any).fs.stat(path).mtime.getTime() as number; // eslint-disable-line @typescript-eslint/no-explicit-any
       if (lastModified !== modified) {
         if (lastModified) {
-          debouncedHandler()
+          debouncedHandler();
         }
-        lastModified = modified
+        lastModified = modified;
       }
     } catch (e) {
-      lastModified = -1
+      lastModified = -1;
     }
-  }, 300)
+  }, 300);
 }

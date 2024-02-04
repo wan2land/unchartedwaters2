@@ -1,4 +1,4 @@
-module.exports = {
+{
   "env": {
     "browser": true,
     "es2021": true
@@ -7,7 +7,8 @@ module.exports = {
     "eslint:recommended",
     "preact",
     "prettier",
-    "prettier/@typescript-eslint",
+    "plugin:tailwindcss/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,5 +18,6 @@ module.exports = {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "plugins": ["@typescript-eslint"],
   "rules": {}
 }

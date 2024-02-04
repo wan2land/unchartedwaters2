@@ -1,11 +1,17 @@
-const originAddEventListeners = new Map<any, any>();
-const blockedEventHandlers = new Map<any, Record<string, EventHandler[]>>();
-
-export type EventHandler = (...args: any[]) => any;
+export type EventHandler = (...args: unknown[]) => unknown;
 
 export interface HasAddEventListener {
-  addEventListener(event: string, handler: EventHandler): any;
+  addEventListener(event: string, handler: EventHandler): void;
 }
+
+const originAddEventListeners = new Map<
+  HasAddEventListener,
+  HasAddEventListener["addEventListener"]
+>();
+const blockedEventHandlers = new Map<
+  HasAddEventListener,
+  Record<string, EventHandler[]>
+>();
 
 export function blockAddEventListener(
   target: HasAddEventListener,
@@ -27,7 +33,7 @@ export function blockAddEventListener(
       handlers[event].push(handler);
       return;
     }
-    return originAddEventListener.apply(this, arguments as any); // eslint-disable-line prefer-rest-params
+    return originAddEventListener.apply(this, arguments as any); // eslint-disable-line prefer-rest-params,@typescript-eslint/no-explicit-any
   };
 }
 

@@ -1,5 +1,5 @@
-import { useMemo } from "preact/hooks";
-import { Key } from "./Key.tsx";
+import { ComponentChildren } from "preact";
+import { useCallback, useMemo, useRef } from "preact/hooks";
 
 const enum KeyCode {
   // Original Keypad
@@ -37,13 +37,7 @@ const enum KeyCode {
   PageUp = 33,
   PageDown = 34,
 
-  Enter = 13, // Enter
   Space = 32, // Space
-
-  ArrowLeft = 100,
-  ArrowUp = 104,
-  ArrowRight = 102,
-  ArrowDown = 98,
 
   Escape = 27, // Escape
 }
@@ -60,153 +54,245 @@ export interface VirtualKeyboardProps {
 export function VirtualKeyboard({ onKeyUp, onKeyDown }: VirtualKeyboardProps) {
   return useMemo(
     () => (
-      <div
-        class="keyboard"
+      <table
+        class="virtual-keyboard"
         onContextMenu={handlePrevent}
         onContextMenuCapture={handlePrevent}
       >
-        <div class="col">
-          <div class="line">
-            <Key
-              label="ESC"
-              onKeyDown={() => onKeyDown?.(KeyCode.Escape)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Escape)}
-            />
-          </div>
-        </div>
-        <div class="col">
-          <div class="line">
-            <Key
-              label="/"
-              sublabel="Q"
-              description="Menu 4"
-              onKeyDown={() => onKeyDown?.(KeyCode.NumpadDivide)}
-              onKeyUp={() => onKeyUp?.(KeyCode.NumpadDivide)}
-            />
-            <Key
-              label="*"
-              sublabel="W"
-              description="Menu 3"
-              onKeyDown={() => onKeyDown?.(KeyCode.NumpadMultiply)}
-              onKeyUp={() => onKeyUp?.(KeyCode.NumpadMultiply)}
-            />
-            <Key
-              label="-"
-              sublabel="E"
-              description="Menu 2"
-              onKeyDown={() => onKeyDown?.(KeyCode.NumpadSubtract)}
-              onKeyUp={() => onKeyUp?.(KeyCode.NumpadSubtract)}
-            />
-          </div>
-          <div class="line">
-            <Key
-              label="7"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit7)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit7)}
-            />
-            <Key
-              label="8"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit8)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit8)}
-            />
-            <Key
-              label="9"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit9)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit9)}
-            />
-          </div>
-          <div class="line">
-            <Key
-              label="4"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit4)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit4)}
-            />
-            <Key
-              label="5"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit5)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit5)}
-            />
-            <Key
-              label="6"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit6)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit6)}
-            />
-          </div>
-          <div class="line">
-            <Key
-              label="1"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit1)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit1)}
-            />
-            <Key
-              label="2"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit2)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit2)}
-            />
-            <Key
-              label="3"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit3)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit3)}
-            />
-          </div>
-          <div class="line">
-            <Key
-              label="0"
-              onKeyDown={() => onKeyDown?.(KeyCode.Digit0)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Digit0)}
-            />
-            <Key
-              label={
-                <>
-                  Page
-                  <br />
-                  Up
-                </>
-              }
-              onKeyDown={() => onKeyDown?.(KeyCode.PageUp)}
-              onKeyUp={() => onKeyUp?.(KeyCode.PageUp)}
-            />
-            <Key
-              label={
-                <>
-                  Page
-                  <br />
-                  Down
-                </>
-              }
-              onKeyDown={() => onKeyDown?.(KeyCode.PageDown)}
-              onKeyUp={() => onKeyUp?.(KeyCode.PageDown)}
-            />
-          </div>
-        </div>
-        <div class="col">
-          <div class="line">
-            <Key
-              label="+"
-              sublabel="R"
-              description="Menu 1"
-              onKeyDown={() => onKeyDown?.(KeyCode.NumpadAdd)}
-              onKeyUp={() => onKeyUp?.(KeyCode.NumpadAdd)}
-            />
-          </div>
-          <div class="line">
-            <Key
-              label="="
-              onKeyDown={() => onKeyDown?.(KeyCode.NumpadEqual)}
-              onKeyUp={() => onKeyUp?.(KeyCode.NumpadEqual)}
-            />
-          </div>
-          <div class="line">
-            <Key
-              class="key-row-3"
-              label="Enter"
-              onKeyDown={() => onKeyDown?.(KeyCode.Enter)}
-              onKeyUp={() => onKeyUp?.(KeyCode.Enter)}
-            />
-          </div>
-        </div>
-      </div>
+        <tbody>
+          <tr>
+            <td>
+              <Key
+                label="ESC"
+                onKeyDown={() => onKeyDown?.(KeyCode.Escape)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Escape)}
+              />
+            </td>
+            <td>
+              <Key
+                label="/"
+                sublabel="Q"
+                description="Menu 4"
+                onKeyDown={() => onKeyDown?.(KeyCode.NumpadDivide)}
+                onKeyUp={() => onKeyUp?.(KeyCode.NumpadDivide)}
+              />
+            </td>
+            <td>
+              <Key
+                label="*"
+                sublabel="W"
+                description="Menu 3"
+                onKeyDown={() => onKeyDown?.(KeyCode.NumpadMultiply)}
+                onKeyUp={() => onKeyUp?.(KeyCode.NumpadMultiply)}
+              />
+            </td>
+            <td>
+              <Key
+                label="-"
+                sublabel="E"
+                description="Menu 2"
+                onKeyDown={() => onKeyDown?.(KeyCode.NumpadSubtract)}
+                onKeyUp={() => onKeyUp?.(KeyCode.NumpadSubtract)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Key
+                label="7"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit7)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit7)}
+              />
+            </td>
+            <td>
+              <Key
+                label="8"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit8)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit8)}
+              />
+            </td>
+            <td>
+              <Key
+                label="9"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit9)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit9)}
+              />
+            </td>
+            <td>
+              <Key
+                label="+"
+                sublabel="R"
+                description="Menu 1"
+                onKeyDown={() => onKeyDown?.(KeyCode.NumpadAdd)}
+                onKeyUp={() => onKeyUp?.(KeyCode.NumpadAdd)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Key
+                label="4"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit4)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit4)}
+              />
+            </td>
+            <td>
+              <Key
+                label="5"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit5)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit5)}
+              />
+            </td>
+            <td>
+              <Key
+                label="6"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit6)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit6)}
+              />
+            </td>
+            <td>
+              <Key
+                label="="
+                onKeyDown={() => onKeyDown?.(KeyCode.NumpadEqual)}
+                onKeyUp={() => onKeyUp?.(KeyCode.NumpadEqual)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Key
+                label="1"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit1)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit1)}
+              />
+            </td>
+            <td>
+              <Key
+                label="2"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit2)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit2)}
+              />
+            </td>
+            <td>
+              <Key
+                label="3"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit3)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit3)}
+              />
+            </td>
+            <td rowSpan={2}>
+              <Key
+                label="Enter"
+                onKeyDown={() => onKeyDown?.(KeyCode.NumpadEnter)}
+                onKeyUp={() => onKeyUp?.(KeyCode.NumpadEnter)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Key
+                label="0"
+                onKeyDown={() => onKeyDown?.(KeyCode.Digit0)}
+                onKeyUp={() => onKeyUp?.(KeyCode.Digit0)}
+              />
+            </td>
+            <td>
+              <Key
+                label={
+                  <>
+                    Page
+                    <br />
+                    Up
+                  </>
+                }
+                onKeyDown={() => onKeyDown?.(KeyCode.PageUp)}
+                onKeyUp={() => onKeyUp?.(KeyCode.PageUp)}
+              />
+            </td>
+            <td>
+              <Key
+                label={
+                  <>
+                    Page
+                    <br />
+                    Down
+                  </>
+                }
+                onKeyDown={() => onKeyDown?.(KeyCode.PageDown)}
+                onKeyUp={() => onKeyUp?.(KeyCode.PageDown)}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     ),
     [onKeyUp, onKeyDown]
+  );
+}
+
+export interface KeyProps {
+  label: ComponentChildren;
+  sublabel?: string;
+  description?: string;
+  onKeyDown?: () => void;
+  onKeyUp?: () => void;
+}
+
+export function Key({
+  label,
+  sublabel,
+  description,
+  onKeyDown,
+  onKeyUp,
+}: KeyProps) {
+  const isActiveRef = useRef(false);
+
+  const handlePointerDown = useCallback(() => {
+    if (isActiveRef.current) {
+      return;
+    }
+    isActiveRef.current = true;
+    onKeyDown?.();
+  }, [onKeyDown]);
+  const handlePointerUp = useCallback(() => {
+    if (!isActiveRef.current) {
+      return;
+    }
+    isActiveRef.current = false;
+    onKeyUp?.();
+  }, [onKeyUp]);
+  const handlePointerLeave = useCallback(() => {
+    if (isActiveRef.current) {
+      handlePointerUp();
+    }
+  }, [handlePointerUp]);
+  const handlePointerCancel = useCallback(() => {
+    if (isActiveRef.current) {
+      handlePointerUp();
+    }
+  }, [handlePointerUp]);
+  return (
+    <button
+      class="virtual-keyboard__key"
+      type="button"
+      tabIndex={-1}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerLeave}
+      onPointerCancel={handlePointerCancel}
+    >
+      <div class="virtual-keyboard__key__label">
+        <span>{label}</span>
+        {sublabel && (
+          <>
+            <span class="virtual-keyboard__key__or"> or </span>
+            <span>{sublabel}</span>
+          </>
+        )}
+      </div>
+      {description && (
+        <div class="virtual-keyboard__key__description">{description}</div>
+      )}
+    </button>
   );
 }
