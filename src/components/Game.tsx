@@ -260,6 +260,13 @@ export function Game({
     if (!database.current) {
       return;
     }
+    if (
+      !confirm(
+        "세이브 파일을 불러오면 현재 컴퓨터에서 진행중인 게임이 삭제 될 수 있습니다.\n계속 진행하시겠습니까?"
+      )
+    ) {
+      return;
+    }
     const files = await fileDialog();
     if (!files[0]) {
       return;
@@ -291,7 +298,7 @@ export function Game({
       });
       if (
         !confirm(
-          "세이브 파일을 드롭박스에 저정합니다.\n이미 저장된 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?"
+          "세이브 파일을 드롭박스에 저정합니다.\n드롭박스에 저장된 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?"
         )
       ) {
         return;
@@ -326,7 +333,7 @@ export function Game({
       });
       if (
         !confirm(
-          "세이브 파일을 드롭박스에서 불러옵니다.\n현재 컴퓨터에서 진행중인 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?"
+          "세이브 파일을 드롭박스에서 불러옵니다.\n현재 컴퓨터에서 진행중인 게임이 삭제 될 수 있습니다.\n계속 진행하시겠습니까?"
         )
       ) {
         return;

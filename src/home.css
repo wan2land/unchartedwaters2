@@ -15,6 +15,12 @@
   }
 }
 
+@layer base {
+  button {
+    @apply focus:outline-none;
+  }
+}
+
 @layer components {
   /** App */
   .app {
@@ -72,10 +78,10 @@
     }
   }
   .menu__item {
-    @apply block cursor-pointer px-1.5 py-0.5 w-full whitespace-nowrap hover:bg-dos-black hover:text-dos-white text-left;
+    @apply cursor-pointer px-1.5 py-0.5 w-full whitespace-nowrap hover:bg-dos-black hover:text-dos-white text-left gap-x-1 flex items-center;
   }
-  .menu__item--has-icon {
-    @apply gap-x-2 flex items-center fill-current;
+  .menu__item__icon {
+    @apply fill-current;
   }
 
   /** Game */
