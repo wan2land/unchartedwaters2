@@ -4,6 +4,7 @@ import { GameProps } from "./Game";
 
 import logo from "../assets/logo.gif";
 import { IconDropbox } from "./icon/IconDropbox";
+import { IconGithub } from "./icon/IconGithub";
 
 const DBX_CLIENT_ID = "95lb7zut06xyhr8";
 
@@ -91,33 +92,50 @@ export function Splash({ dbx, onChangeDbx, onStartGame }: SplashProps) {
           에르네스트 모드(v1.11) 플레이
         </button>
       </div>
-      {!isLoadingDbx && (
-        <div class="menu">
-          {dbx ? (
-            <button
-              type="button"
-              class="menu__item menu__item--has-icon"
-              onClick={dropboxLogout}
-            >
-              <div className="size-6">
-                <IconDropbox />
-              </div>
-              <span>로그아웃</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              class="menu__item menu__item--has-icon"
-              onClick={dropboxLogin}
-            >
-              <div className="size-6">
-                <IconDropbox />
-              </div>
-              <span>로그인</span>
-            </button>
-          )}
-        </div>
-      )}
+      <div class="menu">
+        {isLoadingDbx ? (
+          <div class="menu__item menu__item--has-icon">
+            <div className="size-6">
+              <IconDropbox />
+            </div>
+            <span class="w-[80px]" />
+          </div>
+        ) : dbx ? (
+          <button
+            type="button"
+            class="menu__item menu__item--has-icon"
+            onClick={dropboxLogout}
+          >
+            <div className="size-6">
+              <IconDropbox />
+            </div>
+            <span>드롭박스 로그아웃</span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            class="menu__item menu__item--has-icon"
+            onClick={dropboxLogin}
+          >
+            <div className="size-6">
+              <IconDropbox />
+            </div>
+            <span>드롭박스 로그인</span>
+          </button>
+        )}
+        <a
+          type="button"
+          class="menu__item menu__item--has-icon"
+          href="https://github.com/wan2land/unchartedwater2"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div className="size-6">
+            <IconGithub />
+          </div>
+          <span>소스코드 / 버그 리포트</span>
+        </a>
+      </div>
     </div>
   );
 }

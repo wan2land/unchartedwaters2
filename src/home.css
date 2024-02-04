@@ -23,9 +23,6 @@
   .app__version {
     @apply absolute select-none pointer-events-none text-sm text-gray-600 right-0 bottom-0 px-1.5 py-1;
   }
-  .app__github {
-    @apply absolute flex items-center right-0 top-0 px-1.5 py-1 text-gray-600 fill-current gap-x-1 text-sm;
-  }
 
   /** Splash */
   .splash {
@@ -75,7 +72,7 @@
     }
   }
   .menu__item {
-    @apply block cursor-pointer px-1.5 py-0.5 w-full whitespace-nowrap hover:bg-dos-black hover:text-dos-white;
+    @apply block cursor-pointer px-1.5 py-0.5 w-full whitespace-nowrap hover:bg-dos-black hover:text-dos-white text-left;
   }
   .menu__item--has-icon {
     @apply gap-x-2 flex items-center fill-current;
