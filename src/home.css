@@ -12,6 +12,7 @@
   body {
     background: #000;
     overflow: hidden;
+    touch-action: manipulation;
   }
 }
 
