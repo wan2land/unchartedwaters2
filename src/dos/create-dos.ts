@@ -12,7 +12,6 @@ export async function createDos(
     window
       .Dos(canvas, {
         wdosboxUrl: "/static/js-dos/wdosbox.js",
-        cycles: 10000,
       })
       .ready((fs, main) => resolve({ fs, main }));
   });
