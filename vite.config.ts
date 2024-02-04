@@ -8,6 +8,14 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
+          src: "CNAME",
+          dest: "CNAME",
+        },
+        {
+          src: "static/*",
+          dest: "static",
+        },
+        {
           src: "node_modules/js-dos/dist/*",
           dest: "static/js-dos",
         },
