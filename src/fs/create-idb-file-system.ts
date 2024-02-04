@@ -1,4 +1,5 @@
 export interface IdbFileSystem {
+  delete(key: string): Promise<void>;
   save(key: string, data: Uint8Array): Promise<void>;
   load(key: string): Promise<Uint8Array | null>;
 }
@@ -18,6 +19,17 @@ export async function createIdbFileSystem(
   });
 
   return {
+    delete(key: string): Promise<void> {
+      return new Promise<void>((resolve) => {
+        const request = db
+          .transaction("files", "readwrite")
+          .objectStore("files")
+          .delete(key);
+        request.onsuccess = function () {
+          resolve();
+        };
+      });
+    },
     save(key: string, data: Uint8Array): Promise<void> {
       return new Promise<void>((resolve) => {
         const request = db

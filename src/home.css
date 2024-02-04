@@ -88,25 +88,45 @@
   .game {
     @apply w-full h-full flex items-stretch flex-col landscape:flex-row;
   }
-  .game__tools {
-    @apply flex grow-0 shrink-0 min-w-0 items-center px-2 landscape:flex-col landscape:py-4 landscape:px-0 bg-gray-800;
+  .game__header {
+    @apply relative flex grow-0 shrink-0 items-stretch flex-col;
+    @apply landscape:flex-row;
   }
-  .game__tools__group-start,
-  .game__tools__group-end {
-    @apply flex flex-row landscape:flex-col;
+  .game__header__nav {
+    @apply flex items-center px-2 bg-gray-800;
+    @apply landscape:flex-col landscape:py-4 landscape:px-0;
   }
-  .game__tools__group-start {
-    @apply grow;
-  }
-  .game__tools__item {
+  .game__header__item {
     @apply block cursor-pointer fill-current text-white p-2 hover:bg-white/30 active:bg-white/40;
     svg {
       @apply size-5;
     }
   }
-  .game__tools__item--disabled {
+  .game__header__item--disabled {
     @apply text-gray-500;
   }
+
+  .game__header__fns {
+    @apply absolute top-full z-10 bg-gray-700 hidden;
+    @apply landscape:py-4 landscape:left-full landscape:top-0;
+  }
+  .game__header__fns--toggled {
+    @apply block;
+  }
+
+  .game__header__fns__item {
+    @apply cursor-pointer w-full fill-current text-white py-2 px-4 flex items-center gap-x-1 text-sm;
+    @apply landscape:px-2;
+    @apply hover:bg-white/20;
+    @apply active:bg-white/30;
+    svg {
+      @apply size-5;
+    }
+    span {
+      @apply whitespace-nowrap;
+    }
+  }
+
   .game__screen {
     @apply relative flex-auto;
     canvas {
@@ -124,7 +144,7 @@
 
   /** Toast **/
   .toast {
-    @apply absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1.5 bg-white/80 pointer-events-none rounded-sm transition-opacity duration-500 opacity-0 text-sm;
+    @apply absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1.5 bg-white/80 pointer-events-none rounded-sm transition-opacity duration-500 opacity-0 text-sm whitespace-pre text-center;
   }
 
   .toast--active {
