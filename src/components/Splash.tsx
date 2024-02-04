@@ -17,7 +17,7 @@ const DBX_CLIENT_ID = "95lb7zut06xyhr8";
  */
 const modSettings = [
   {
-    name: "교정버전",
+    name: "버그/번역 교정판",
     version: "v1.08",
     mod: "mod_correction_v1.08",
     saveFile: undefined,
@@ -113,7 +113,7 @@ export function Splash({ dbx, onChangeDbx, onStartGame }: SplashProps) {
 
   return (
     <div class="splash">
-      <img src={logo} />
+      <img src={logo} class="px-4" />
       <div class="menu">
         <div class="corner corner-tl" />
         <div class="corner corner-tr" />
