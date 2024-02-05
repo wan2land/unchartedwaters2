@@ -23,7 +23,7 @@ const modSettings = [
     saveFile: undefined,
   },
   {
-    name: "정화편",
+    name: "정화편 (기본판)",
     version: "v3.0",
     mod: "mod_junghwa_v3.0",
     saveFile: "CHENGHO.DAT",
