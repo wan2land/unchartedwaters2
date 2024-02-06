@@ -87,7 +87,7 @@
 
   /** Game */
   .game {
-    @apply w-full h-full flex items-stretch flex-col landscape:flex-row;
+    @apply w-full h-full flex items-stretch flex-col landscape:flex-row select-none;
   }
   .game__header {
     @apply relative flex grow-0 shrink-0 items-stretch flex-col;
