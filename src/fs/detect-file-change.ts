@@ -3,7 +3,7 @@ import { debounce } from "../utils/timing";
 export function detectFileChange(
   fs: any, // eslint-disable-line @typescript-eslint/no-explicit-any
   path: string,
-  handler: () => unknown
+  handler: () => unknown,
 ) {
   let lastModified = null as number | null;
   const debouncedHandler = debounce(handler, 350);

@@ -6,7 +6,7 @@ export interface IdbFileSystem {
 
 export async function createIdbFileSystem(
   name: string,
-  version?: number
+  version?: number,
 ): Promise<IdbFileSystem> {
   const db = await new Promise<IDBDatabase>((resolve) => {
     const idb = window.indexedDB.open(name, version);

@@ -1,13 +1,14 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": "> 0.25%, not dead, ie >= 11",
-      "corejs": 3
-    }],
+    [
+      "@babel/preset-env",
+      {
+        "targets": "> 0.25%, not dead, ie >= 11",
+        "corejs": 3
+      }
+    ],
     "@babel/typescript",
     "babel-preset-typescript-vue"
   ],
-  "plugins": [
-    "@babel/plugin-transform-runtime"
-  ]
+  "plugins": ["@babel/plugin-transform-runtime"]
 }

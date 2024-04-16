@@ -136,14 +136,14 @@ export function Game({
     (e: KeyboardEvent) => {
       handleKeyDown(KEY_ALIAS[e.code] ?? e.keyCode);
     },
-    [handleKeyDown]
+    [handleKeyDown],
   );
 
   const handleDocumentKeyUp = useCallback(
     (e: KeyboardEvent) => {
       handleKeyUp(KEY_ALIAS[e.code] ?? e.keyCode);
     },
-    [handleKeyUp]
+    [handleKeyUp],
   );
 
   useEffect(() => {
@@ -183,7 +183,7 @@ export function Game({
     joystick.on("move", (_, data) => {
       if (data.force > 0.3) {
         setJoystickCode(
-          JOYSTICK_MAPS[(Math.floor((data.angle.degree - 22.5) / 45) + 8) % 8]
+          JOYSTICK_MAPS[(Math.floor((data.angle.degree - 22.5) / 45) + 8) % 8],
         );
       } else {
         setJoystickCode(null);
@@ -249,14 +249,14 @@ export function Game({
     }
     if (
       !confirm(
-        "게임을 초기화 하면 진행중인 게임이 삭제될 수 있습니다.\n계속 진행하시겠습니까?"
+        "게임을 초기화 하면 진행중인 게임이 삭제될 수 있습니다.\n계속 진행하시겠습니까?",
       )
     ) {
       return;
     }
     await database.current.delete(saveFile);
     setToastMessage(
-      "세이브 파일이 삭제되었습니다.\n새로고침 후 새로운 게임을 시작할 수 있습니다."
+      "세이브 파일이 삭제되었습니다.\n새로고침 후 새로운 게임을 시작할 수 있습니다.",
     );
   }, [saveFile]);
 
@@ -273,7 +273,7 @@ export function Game({
     const url = URL.createObjectURL(
       new Blob([data], {
         type: "application/octet-stream",
-      })
+      }),
     );
     saveAs(url, saveFile);
   }, [saveFile]);
@@ -284,7 +284,7 @@ export function Game({
     }
     if (
       !confirm(
-        "세이브 파일을 불러오면 현재 브라우저에서 진행중인 게임이 삭제 될 수 있습니다.\n계속 진행하시겠습니까?"
+        "세이브 파일을 불러오면 현재 브라우저에서 진행중인 게임이 삭제 될 수 있습니다.\n계속 진행하시겠습니까?",
       )
     ) {
       return;
@@ -295,10 +295,10 @@ export function Game({
     }
     database.current.save(
       saveFile,
-      new Uint8Array(await files[0].arrayBuffer())
+      new Uint8Array(await files[0].arrayBuffer()),
     );
     setToastMessage(
-      "세이브 파일이 브라우저에 저장되었습니다.\n새로고침 후 파일을 불러 올 수 있습니다."
+      "세이브 파일이 브라우저에 저장되었습니다.\n새로고침 후 파일을 불러 올 수 있습니다.",
     );
   }, [saveFile]);
 
@@ -320,7 +320,7 @@ export function Game({
       });
       if (
         !confirm(
-          "세이브 파일을 드롭박스에 저정합니다.\n드롭박스에 저장된 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?"
+          "세이브 파일을 드롭박스에 저정합니다.\n드롭박스에 저장된 세이브파일이 삭제될 수도 있습니다.\n계속 진행하시겠습니까?",
         )
       ) {
         return;
@@ -355,7 +355,7 @@ export function Game({
       });
       if (
         !confirm(
-          "세이브 파일을 드롭박스에서 불러옵니다.\n현재 브라우저에서 진행중인 게임이 삭제 될 수 있습니다.\n계속 진행하시겠습니까?"
+          "세이브 파일을 드롭박스에서 불러옵니다.\n현재 브라우저에서 진행중인 게임이 삭제 될 수 있습니다.\n계속 진행하시겠습니까?",
         )
       ) {
         return;
@@ -363,10 +363,10 @@ export function Game({
       const fileBlob = (response.result as any).fileBlob as Blob; // eslint-disable-line @typescript-eslint/no-explicit-any
       database.current.save(
         saveFile,
-        new Uint8Array(await fileBlob.arrayBuffer())
+        new Uint8Array(await fileBlob.arrayBuffer()),
       );
       setToastMessage(
-        "세이브 파일을 드롭박스에서 성공적으로 불러왔습니다.\n새로고침 후 파일을 불러 올 수 있습니다."
+        "세이브 파일을 드롭박스에서 성공적으로 불러왔습니다.\n새로고침 후 파일을 불러 올 수 있습니다.",
       );
     } catch (e) {
       setToastMessage("🚫 세이브파일을 드롭박스에서 불러오는데 실패했습니다.");

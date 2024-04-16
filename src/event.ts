@@ -15,7 +15,7 @@ const blockedEventHandlers = new Map<
 
 export function blockAddEventListener(
   target: HasAddEventListener,
-  events: string[]
+  events: string[],
 ) {
   if (originAddEventListeners.has(target)) {
     restoreAddEventListener(target);
@@ -39,7 +39,7 @@ export function blockAddEventListener(
 
 export function getBlockedHandler(
   target: HasAddEventListener,
-  event: string
+  event: string,
 ): EventHandler[] {
   const handlers = blockedEventHandlers.get(target);
   if (!handlers) {

@@ -4,7 +4,7 @@ import { once, load } from "nano-loader";
 const loadJsDos = once(() => load("/static/js-dos/js-dos.js"));
 
 export async function createDos(
-  canvas: HTMLCanvasElement
+  canvas: HTMLCanvasElement,
 ): Promise<{ fs: any; main: any }> {
   await loadJsDos();
 

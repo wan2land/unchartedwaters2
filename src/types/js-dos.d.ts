@@ -3,7 +3,7 @@ declare global {
   interface Window {
     Dos: (
       canvas: HTMLCanvasElement,
-      options: Record<string, unknown>
+      options: Record<string, unknown>,
     ) => { ready: (resolve: (fs: any, main: any) => void) => void };
     DosController: { Move: any };
   }

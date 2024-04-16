@@ -226,7 +226,7 @@ export function VirtualKeyboard({ onKeyUp, onKeyDown }: VirtualKeyboardProps) {
         </tbody>
       </table>
     ),
-    [onKeyUp, onKeyDown]
+    [onKeyUp, onKeyDown],
   );
 }
 
