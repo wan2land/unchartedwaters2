@@ -38,7 +38,7 @@
 
   /** Menu */
   .menu {
-    @apply relative box-border p-6;
+    @apply relative box-border p-6 select-none;
     box-shadow:
       inset 0 0 0 2px #000,
       inset 0 0 0 4px #d34100,
@@ -83,6 +83,16 @@
   }
   .menu__item__icon {
     @apply fill-current;
+  }
+
+  .menu__title {
+    @apply px-1.5 py-0.5 w-full whitespace-nowrap gap-x-1 flex items-center;
+  }
+  .menu__help {
+    @apply px-1.5 w-full whitespace-nowrap gap-x-1 flex items-center text-sm text-blue-500 font-semibold;
+  }
+  .menu__item__item {
+    @apply cursor-pointer px-1.5 pl-3 py-0.5 w-full whitespace-nowrap hover:bg-dos-black hover:text-dos-white text-left gap-x-1 flex items-center text-sm;
   }
 
   /** Game */

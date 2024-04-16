@@ -1,6 +1,6 @@
 import { Dropbox, DropboxAuth } from "dropbox";
-import { useCallback, useEffect, useState, useMemo } from "preact/hooks";
-import { GameProps } from "./Game";
+import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
+import { GameConfig } from "./Game";
 
 import logo from "../assets/logo.gif";
 import { IconDropbox } from "./icon/IconDropbox";
@@ -15,31 +15,67 @@ const DBX_CLIENT_ID = "95lb7zut06xyhr8";
  * entry: 실행 파일 이름 (기본값 `KOEI.COM`)
  * saveFile: 세이브 파일 이름 (기본값 `KOUKAI2.DAT`)
  */
-const modSettings = [
+const modSettings: {
+  name: string;
+  version: string;
+  help?: string;
+  config?: GameConfig;
+  parts?: { name: string; config: GameConfig }[];
+}[] = [
   {
     name: "버그/번역 교정판",
     version: "v1.08",
-    mod: "mod_correction_v1.08",
-    saveFile: undefined,
+    config: {
+      mod: "mod_correction_v1.08",
+      gameFile: "mod_correction_v1.08.zip",
+      saveFile: undefined,
+    },
   },
   {
     name: "정화편 (기본판)",
     version: "v3.0",
-    mod: "mod_junghwa_v3.0",
-    saveFile: "CHENGHO.DAT",
+    config: {
+      mod: "mod_junghwa_v3.0",
+      gameFile: "mod_junghwa_v3.0.zip",
+      saveFile: "CHENGHO.DAT",
+    },
   },
   {
     name: "에르네스트 모드",
     version: "v1.11",
-    mod: "mod_ernst_v1.11",
-    entry: "PLAY.BAT",
+    config: {
+      mod: "mod_ernst_v1.11",
+      gameFile: "mod_ernst_v1.11.zip",
+      entry: "PLAY.BAT",
+    },
+  },
+  {
+    name: "밀란다 / 살바도르편",
+    version: "v161126",
+    help: "밀란다 / 살바도르편은 세이브파일이 호환됩니다.",
+    parts: [
+      {
+        name: "- 밀란다 패치1",
+        config: {
+          mod: "mod_eojeon_161126",
+          gameFile: "mod_eojeon_161126_p1.zip",
+        },
+      },
+      {
+        name: "- 밀란다 패치2",
+        config: {
+          mod: "mod_eojeon_161126",
+          gameFile: "mod_eojeon_161126_p2.zip",
+        },
+      },
+    ],
   },
 ];
 
 interface SplashProps {
   dbx: Dropbox | undefined;
   onChangeDbx: (dbx: Dropbox | undefined) => void;
-  onStartGame: (gameProps: GameProps) => void;
+  onStartGame: (gameConfig: GameConfig) => void;
 }
 
 export function Splash({ dbx, onChangeDbx, onStartGame }: SplashProps) {
@@ -96,17 +132,37 @@ export function Splash({ dbx, onChangeDbx, onStartGame }: SplashProps) {
         >
           <span>대항해시대2 실행</span>
         </button>
-        {modSettings.map(({ name, version, ...mod }) => (
-          <button
-            key={mod.mod}
-            type="button"
-            class="menu__item"
-            onClick={() => onStartGame(mod)}
-          >
-            <span>{name} 실행</span>
-            <span class="italic">{version}</span>
-          </button>
-        ))}
+        {modSettings.map(({ name, version, config, help, parts }, modIndex) =>
+          config ? (
+            <button
+              key={modIndex}
+              type="button"
+              class="menu__item"
+              onClick={() => onStartGame(config)}
+            >
+              <span>{name} 실행</span>
+              <span class="italic">{version}</span>
+            </button>
+          ) : parts ? (
+            <div key={modIndex}>
+              <div class="menu__title">
+                <span>{name}</span>
+                <span class="italic">{version}</span>
+              </div>
+              {help ? <div class="menu__help">{help}</div> : null}
+              {parts.map(({ name, config }, partIndex) => (
+                <button
+                  key={partIndex}
+                  type="button"
+                  class="menu__item__item"
+                  onClick={() => onStartGame(config)}
+                >
+                  <span>{name} 실행</span>
+                </button>
+              ))}
+            </div>
+          ) : null,
+        )}
       </>
     );
   }, [onStartGame]);

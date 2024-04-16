@@ -49,17 +49,25 @@ const KEY_ALIAS: Record<string, number> = {
   ArrowDown: 98, // Numpad2
 };
 
-export interface GameProps {
+export interface GameConfig {
+  gameFile?: string; // water2.zip
   mod?: string; // water2
   entry?: string;
   saveFile?: string;
+}
+
+export interface GameProps {
+  config: GameConfig;
   dbx?: Dropbox;
 }
 
 export function Game({
-  mod = "water2",
-  entry = "KOEI.COM",
-  saveFile = "KOUKAI2.DAT",
+  config: {
+    gameFile = "water2.zip",
+    mod = "water2",
+    entry = "KOEI.COM",
+    saveFile = "KOUKAI2.DAT",
+  },
   dbx,
 }: GameProps) {
   const [width, setWidth] = useState(640);
@@ -166,7 +174,7 @@ export function Game({
     blockAddEventListener(document, ["keydown", "keyup", "keypress"]);
     const db = (database.current = await createIdbFileSystem(mod, 1));
     const { fs, main } = await createDos(canvas.current!);
-    await fs.extract(`/static/game/${mod}.zip`);
+    await fs.extract(`/static/game/${gameFile}`);
     const saveFileBody = await db.load(saveFile);
     if (saveFileBody) {
       // Overwrite Save File
