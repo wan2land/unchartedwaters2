@@ -29,7 +29,8 @@
 
 - [교정버전 v1.08](https://cafe.naver.com/daehangs/73594)
 - [에르네스트 모드 v1.11](https://cafe.naver.com/daehangs/71466)
-- [정화편 v3.0](https://cafe.naver.com/daehangs/52187)
+- [정화편(기본판) v3.0](https://cafe.naver.com/daehangs/52187)
+- [밀란다 / 살바도르편 20216.11.26](https://cafe.naver.com/daehangs/66350)
 
 ## 실행
 

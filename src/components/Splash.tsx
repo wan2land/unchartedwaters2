@@ -55,17 +55,24 @@ const modSettings: {
     help: "밀란다 / 살바도르편은 세이브파일이 호환됩니다.",
     parts: [
       {
-        name: "- 밀란다 패치1",
+        name: "- 패치1: 밀란다",
         config: {
           mod: "mod_eojeon_161126",
           gameFile: "mod_eojeon_161126_p1.zip",
         },
       },
       {
-        name: "- 밀란다 패치2",
+        name: "- 패치2: 밀란다",
         config: {
           mod: "mod_eojeon_161126",
           gameFile: "mod_eojeon_161126_p2.zip",
+        },
+      },
+      {
+        name: "- 패치3: 살바도르편",
+        config: {
+          mod: "mod_eojeon_161126",
+          gameFile: "mod_eojeon_161126_p3.zip",
         },
       },
     ],
