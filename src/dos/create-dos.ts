@@ -12,7 +12,8 @@ export async function createDos(
     window
       .Dos(canvas, {
         wdosboxUrl: "/static/js-dos/wdosbox.js",
-      })
+        SDL_numSimultaneouslyQueuedBuffers: 10,
+      } as Record<string, unknown>)
       .ready((fs, main) => resolve({ fs, main }));
   });
 }
