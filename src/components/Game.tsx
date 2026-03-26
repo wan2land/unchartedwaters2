@@ -36,6 +36,17 @@ const KEY_ALIAS: Record<string, number> = {
   KeyW: 106, // *
   KeyQ: 111, // /
 
+  // Tenkeyless diagonal (UIO/JKL/M,. → Numpad 789/456/123)
+  KeyU: 103, // Numpad7 (LeftUp)
+  KeyI: 104, // Numpad8 (Up)
+  KeyO: 105, // Numpad9 (RightUp)
+  KeyJ: 100, // Numpad4 (Left)
+  KeyK: 101, // Numpad5 (Center)
+  KeyL: 102, // Numpad6 (Right)
+  KeyM: 97, // Numpad1 (LeftDown)
+  Comma: 98, // Numpad2 (Down)
+  Period: 99, // Numpad3 (RightDown)
+
   // Special
   ArrowLeftDown: 97,
   ArrowRightDown: 99,
