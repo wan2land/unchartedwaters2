@@ -404,7 +404,7 @@ export function Game({
 
   return (
     <div class="game">
-      <div class="game__header">
+      <div class="game__header" onMouseDown={(e) => e.preventDefault()}>
         <div class="game__header__nav">
           <div class="flex grow flex-row landscape:flex-col">
             <button
