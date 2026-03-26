@@ -257,6 +257,9 @@ export function Game({
     const doc = window.document;
     if (!doc.fullscreenElement) {
       doc.documentElement.requestFullscreen();
+      if ((navigator as any).keyboard) {
+        (navigator as any).keyboard.lock(["Escape"]);
+      }
     } else {
       doc.exitFullscreen();
     }
